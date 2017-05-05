@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Digital Fencing Ref</string>
+    <string name="title_home">Score</string>
+    <string name="title_dashboard">Video</string>
+    <string name="title_notifications">Stats</string>
+    <string name="title_activity_main1">MainActivity1</string>
+</resources>
