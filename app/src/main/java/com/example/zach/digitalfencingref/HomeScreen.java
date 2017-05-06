@@ -5,9 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HomeScreen extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public  class HomeScreen extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -36,6 +41,51 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        ImageButton redPlus = (ImageButton) findViewById(R.id.redPlus);
+        ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
+        ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
+        ImageButton greenMinus = (ImageButton) findViewById(R.id.greenMinus);
+
+        final TextView redScore = (TextView) findViewById(R.id.redScore);
+        final TextView greenScore = (TextView) findViewById(R.id.greenScore);
+        TextView timer = (TextView) findViewById(R.id.timer);
+
+        redPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int oldValue = Integer.parseInt(redScore.getText().toString());
+                redScore.setText(String.valueOf(oldValue+1));
+            }
+        });
+        redMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int oldValue = Integer.parseInt(redScore.getText().toString());
+                if(oldValue > 0) {
+                    redScore.setText(String.valueOf(oldValue - 1));
+                }
+            }
+        });
+        greenPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int oldValue = Integer.parseInt(greenScore.getText().toString());
+                greenScore.setText(String.valueOf(oldValue+1));
+            }
+        });
+        greenMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int oldValue = Integer.parseInt(greenScore.getText().toString());
+                if(oldValue > 0) {
+                    greenScore.setText(String.valueOf(oldValue - 1));
+                }
+            }
+        });
+
+
+
 
     }
 
