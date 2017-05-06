@@ -57,14 +57,13 @@
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/redMinus"
-            android:background="null"
+            android:background="@null"
             app:srcCompat="@drawable/ic_plus" />
         <TextView
             android:id="@+id/redScore"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_align="true"
             android:focusableInTouchMode="false"
             android:layout_centerVertical="true"
             android:clickable="false"
@@ -78,14 +77,14 @@
             android:id="@+id/redMinus"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="null"
+            android:background="@null"
             app:srcCompat="@drawable/ic_minus"
             android:layout_alignTop="@+id/greenPlus"
             android:layout_toStartOf="@+id/greenPlus" />
 
         <ImageButton
             android:id="@+id/greenPlus"
-            android:background="null"
+            android:background="@null"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:srcCompat="@drawable/ic_plus"
@@ -107,7 +106,7 @@
 
         <ImageButton
             android:id="@+id/greenMinus"
-            android:background="null"
+            android:background="@null"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"

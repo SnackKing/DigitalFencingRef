@@ -17,14 +17,14 @@ public class HomeScreen extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_Score:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.action_score:
+                    mTextMessage.setText(R.string.title_score);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.action_video:
+                    mTextMessage.setText(R.string.title_camera);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.action_stats:
+                    mTextMessage.setText(R.string.title_stats);
                     return true;
             }
             return false;
@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-;
+
     }
 
 }
