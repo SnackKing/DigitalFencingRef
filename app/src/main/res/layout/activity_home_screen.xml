@@ -6,9 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+
+
    >
 
-    <FrameLayout
+
+    <RelativeLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,13 +19,102 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <EditText
+            android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:color/holo_red_dark" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="time"
+            android:text="0:00"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
 
-    </FrameLayout>
+        <ImageView
+
+            android:id="@+id/greenRectangle"
+            android:layout_width="200dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/green_rectangle"
+            android:layout_toEndOf="@+id/redRectangle"
+            android:layout_alignTop="@+id/redRectangle"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/redRectangle"
+            android:layout_width="200dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/red_rectangle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:id="@+id/redPlus"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/redMinus"
+            android:background="null"
+            app:srcCompat="@drawable/ic_plus" />
+        <TextView
+            android:id="@+id/redScore"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_align="true"
+            android:focusableInTouchMode="false"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@id/redMinus"
+            android:layout_toRightOf="@id/redPlus"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/redMinus"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="null"
+            app:srcCompat="@drawable/ic_minus"
+            android:layout_alignTop="@+id/greenPlus"
+            android:layout_toStartOf="@+id/greenPlus" />
+
+        <ImageButton
+            android:id="@+id/greenPlus"
+            android:background="null"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/ic_plus"
+            android:layout_alignTop="@+id/greenMinus"
+            android:layout_toEndOf="@+id/redRectangle" />
+        <TextView
+            android:id="@+id/greenScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:text="0"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_alignBaseline="@+id/redScore"
+            android:layout_alignBottom="@+id/redScore"
+            android:layout_toLeftOf="@id/greenMinus"
+            android:layout_toRightOf="@+id/greenPlus" />
+
+        <ImageButton
+            android:id="@+id/greenMinus"
+            android:background="null"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_minus" />
+
+    </RelativeLayout>
 
 
 
@@ -34,5 +126,10 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"
+        android:layout_alignParentStart="true" />
+
+
+
+
 </RelativeLayout>
