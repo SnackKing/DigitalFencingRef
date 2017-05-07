@@ -56,8 +56,11 @@ public  class HomeScreen extends AppCompatActivity {
         ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
         ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
         ImageButton greenMinus = (ImageButton) findViewById(R.id.greenMinus);
-        Button start = (Button) findViewById(R.id.start);
-        Button stop = (Button) findViewById(R.id.stop);
+        final  Button start = (Button) findViewById(R.id.start);
+        final Button stop = (Button) findViewById(R.id.stop);
+        Button reset = (Button) findViewById(R.id.reset);
+        Button addMinute = (Button) findViewById(R.id.addMinute);
+        Button removeMinute = (Button) findViewById(R.id.removeMinute);
 
         final TextView redScore = (TextView) findViewById(R.id.redScore);
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
@@ -100,6 +103,8 @@ public  class HomeScreen extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                start.setClickable(false);
+                stop.setClickable(true);
                 String currentTime = time.getText().toString();
                 int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
                 int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
@@ -123,15 +128,56 @@ public  class HomeScreen extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                start.setClickable(true);
+                stop.setClickable(false);
                 countDownTimer.cancel();
             }
         });
 
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer.cancel();
+                start.setClickable(true);
+                stop.setClickable(false);
+                time.setText("03:00");
+            }
+        });
 
-
-
-
+        addMinute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String oldTime = time.getText().toString();
+                int newMinutes = Integer.parseInt(oldTime.substring(1,oldTime.indexOf(':')))+1;
+                String newTime = "";
+                if(oldTime.charAt(0) == '0') {
+                    newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+                }
+                else{
+                    newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+                }
+                time.setText(newTime);
+            }
+        });
+        removeMinute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String oldTime = time.getText().toString();
+                int newMinutes = Integer.parseInt(oldTime.substring(1, oldTime.indexOf(':')));
+                if (newMinutes > 0) {
+                    newMinutes--;
+                    String newTime = "";
+                    if (oldTime.charAt(0) == '0') {
+                        newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+                    } else {
+                        newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+                    }
+                    time.setText(newTime);
+                }
+            }
+        });
     }
+
 
 
 }
