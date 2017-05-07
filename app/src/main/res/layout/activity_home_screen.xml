@@ -19,20 +19,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <EditText
-            android:id="@+id/timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="44dp"
-            android:ems="10"
-            android:gravity="center"
-            android:inputType="time"
-            android:text="0:00"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
-
         <ImageView
 
             android:id="@+id/greenRectangle"
@@ -112,6 +98,45 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_minus" />
+
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="113dp"
+            android:background="@color/colorPrimary"
+            android:text="Start"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/start"
+            android:layout_alignBottom="@+id/start"
+            android:layout_toEndOf="@+id/greenPlus"
+            android:background="@color/colorPrimary"
+            android:text="Stop"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="34dp"
+            android:ems="10"
+            android:inputType="number|time"
+            android:text="3:00"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+
 
     </RelativeLayout>
 
