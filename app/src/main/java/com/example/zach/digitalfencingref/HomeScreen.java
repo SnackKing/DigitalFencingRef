@@ -117,7 +117,7 @@ public  class HomeScreen extends AppCompatActivity {
                     public void onFinish() {
 
                     }
-                };
+                }.start();
             }
         });
         stop.setOnClickListener(new View.OnClickListener() {
