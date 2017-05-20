@@ -13,6 +13,8 @@ import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
+
 
 import org.w3c.dom.Text;
 
@@ -24,26 +26,28 @@ public  class HomeScreen extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_score:
-                    mTextMessage.setText(R.string.title_score);
-                    return true;
-                case R.id.action_video:
-                    mTextMessage.setText(R.string.title_camera);
-                    return true;
-                case R.id.action_stats:
-                    mTextMessage.setText(R.string.title_stats);
-                    return true;
-            }
-            return false;
-        }
-
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.action_score:
+//                    mTextMessage.setText(R.string.title_score);
+//                    return true;
+//                case R.id.action_video:
+//                    mTextMessage.setText(R.string.title_camera);
+//                    Intent intent = new Intent(HomeScreen.this, video.class);
+//                    startActivity(intent);
+//                    return true;
+//                case R.id.action_stats:
+//                    mTextMessage.setText(R.string.title_stats);
+//                    return true;
+//            }
+//            return false;
+//        }
+//
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,26 @@ public  class HomeScreen extends AppCompatActivity {
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
         final TextView time = (TextView) findViewById(R.id.time);
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_score:
+                        //mTextMessage.setText(R.string.title_score);
+                        return true;
+                    case R.id.action_video:
+                      //  mTextMessage.setText(R.string.title_camera);
+                        Intent intent = new Intent(HomeScreen.this, video.class);
+                        startActivityForResult(intent,0);
+                        return true;
+                    case R.id.action_stats:
+                       // mTextMessage.setText(R.string.title_stats);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         redPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,11 +140,12 @@ public  class HomeScreen extends AppCompatActivity {
                     public void onTick(long millisUntilFinished) {
                         String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                         time.setText(currentTime);
+
                     }
 
                     @Override
                     public void onFinish() {
-
+                        time.setText("0:00");
                     }
                 }.start();
             }
