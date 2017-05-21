@@ -1,5 +1,6 @@
 package com.example.zach.digitalfencingref;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public  class HomeScreen extends AppCompatActivity {
 
     private TextView mTextMessage;
-
+    private String currentTime;
     private CountDownTimer countDownTimer;
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -70,6 +71,7 @@ public  class HomeScreen extends AppCompatActivity {
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
         final TextView time = (TextView) findViewById(R.id.time);
 
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -81,7 +83,9 @@ public  class HomeScreen extends AppCompatActivity {
                     case R.id.action_video:
                       //  mTextMessage.setText(R.string.title_camera);
                         Intent intent = new Intent(HomeScreen.this, video.class);
+                        intent.putExtra("currentTime",currentTime);
                         startActivityForResult(intent,0);
+
                         return true;
                     case R.id.action_stats:
                        // mTextMessage.setText(R.string.title_stats);
@@ -129,17 +133,30 @@ public  class HomeScreen extends AppCompatActivity {
             public void onClick(View v) {
                 start.setClickable(false);
                 stop.setClickable(true);
-                String currentTime = time.getText().toString();
+                currentTime = time.getText().toString();
                 int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
                 int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
                 long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
                 long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
                 long total = minutesToMilli + secondsToMilli;
+                final SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                SharedPreferences.Editor edit= sharedPreferences.edit();
+                edit.putBoolean("stop", false);
+                edit.apply();
                  countDownTimer = new CountDownTimer(total,1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-                        time.setText(currentTime);
+                        currentTime = time.getText().toString();
+
+                        if (sharedPreferences.getBoolean("stop", true)) {
+                            countDownTimer.cancel();
+                            start.setClickable(true);
+                            stop.setClickable(false);
+                        }
+                        else {
+                            String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                            time.setText(currentTime);
+                        }
 
                     }
 
