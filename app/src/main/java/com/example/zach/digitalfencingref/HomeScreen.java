@@ -70,6 +70,8 @@ public  class HomeScreen extends AppCompatActivity {
         final TextView redScore = (TextView) findViewById(R.id.redScore);
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
         final TextView time = (TextView) findViewById(R.id.time);
+        currentTime = time.getText().toString();
+
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
