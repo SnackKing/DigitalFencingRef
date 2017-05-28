@@ -26,6 +26,7 @@ public  class HomeScreen extends AppCompatActivity {
     private TextView mTextMessage;
     private String currentTime;
     private CountDownTimer countDownTimer;
+    private boolean isCountingDown;
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 //            = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,7 +57,7 @@ public  class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
 
-
+        isCountingDown = false;
         ImageButton redPlus = (ImageButton) findViewById(R.id.redPlus);
         ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
         ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
@@ -86,6 +87,7 @@ public  class HomeScreen extends AppCompatActivity {
                       //  mTextMessage.setText(R.string.title_camera);
                         Intent intent = new Intent(HomeScreen.this, video.class);
                         intent.putExtra("currentTime",currentTime);
+                        intent.putExtra("isCountingDown",isCountingDown);
                         startActivityForResult(intent,0);
 
                         return true;
@@ -136,6 +138,7 @@ public  class HomeScreen extends AppCompatActivity {
                 start.setClickable(false);
                 stop.setClickable(true);
                 currentTime = time.getText().toString();
+                isCountingDown = true;
                 int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
                 int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
                 long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
@@ -175,6 +178,7 @@ public  class HomeScreen extends AppCompatActivity {
                 start.setClickable(true);
                 stop.setClickable(false);
                 countDownTimer.cancel();
+                isCountingDown = false;
             }
         });
 
