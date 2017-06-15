@@ -2,10 +2,11 @@
     <string name="app_name">Fencing Referee Assistant</string>
     <string name="title_score">Score</string>
     <string name="title_camera">Video</string>
-    <string name="title_stats">Stats</string>
+    <string name="title_stats">Glossary</string>
     <string name="title_activity_main1">MainActivity1</string>
     <string name="title_activity_video">video</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name = "activity_glossary">Glossary</string>
 </resources>

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zach.digitalfencingref">
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET"
-        android:required = "true"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:required = "true"/>
+
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:required="true" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
 
     <application
         android:allowBackup="true"
@@ -29,7 +33,11 @@
         </activity>
         <activity
             android:name=".video"
-            android:label="Video"></activity>
+            android:label="Video" />
+        <activity
+            android:name=".activity_glossary"
+            android:label="Glossary">
+        </activity>
     </application>
 
 </manifest>

@@ -93,6 +93,8 @@ public  class HomeScreen extends AppCompatActivity {
                         return true;
                     case R.id.action_stats:
                        // mTextMessage.setText(R.string.title_stats);
+                        Intent glossaryIntent = new Intent(HomeScreen.this,activity_glossary.class);
+                        startActivityForResult(glossaryIntent,0);
                         return true;
                 }
                 return false;
