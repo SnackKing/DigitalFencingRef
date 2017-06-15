@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.zach.digitalfencingref.activity_glossary">
+    tools:context="com.example.zach.digitalfencingref.glossary">
 
     <ExpandableListView
         android:id="@+id/list"

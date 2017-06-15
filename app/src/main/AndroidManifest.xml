@@ -35,7 +35,7 @@
             android:name=".video"
             android:label="Video" />
         <activity
-            android:name=".activity_glossary"
+            android:name=".glossary"
             android:label="Glossary">
         </activity>
     </application>

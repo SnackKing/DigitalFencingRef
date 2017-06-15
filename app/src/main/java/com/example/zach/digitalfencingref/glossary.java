@@ -1,5 +1,6 @@
 package com.example.zach.digitalfencingref;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class activity_glossary extends AppCompatActivity {
+public class glossary extends AppCompatActivity {
     String[] groupList;
     String[] childList;
     Map<String, List<String>> collection;
@@ -34,13 +35,25 @@ public class activity_glossary extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_score:
-                    mTextMessage.setText(R.string.title_home);
+//                    mTextMessage.setText(R.string.title_home);
+                    Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivityIfNeeded(homeIntent, 0);
+
                     return true;
                 case R.id.action_video:
-                    mTextMessage.setText(R.string.title_dashboard);
+                   ;
+//                    mTextMessage.setText(R.string.title_dashboard);
+                    String currentTime = getIntent().getStringExtra("currentTime");
+                    boolean isCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
+                    Intent videoIntent = new Intent(glossary.this, video.class);
+                    videoIntent.putExtra("currentTime",currentTime);
+                    videoIntent.putExtra("isCountingDown",isCountingDown);
+
+                    finish();
                     return true;
                 case R.id.action_stats:
-                    mTextMessage.setText(R.string.title_notifications);
+//                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
             return false;
