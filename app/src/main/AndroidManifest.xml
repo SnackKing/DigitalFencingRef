@@ -24,6 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeScreen"
+            android:screenOrientation="portrait"
             android:label="Fencing Referee Assistant">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +37,7 @@
             android:label="Video" />
         <activity
             android:name=".glossary"
+            android:screenOrientation="portrait"
             android:label="Glossary">
         </activity>
     </application>
