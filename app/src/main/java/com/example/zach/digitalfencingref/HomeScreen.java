@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -203,6 +204,21 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.app_bar,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()== R.id.action_about){
+            startActivity(new Intent(HomeScreen.this,about.class));
+        }
+        else if(item.getItemId() == R.id.action_contact){
+            startActivity(new Intent(HomeScreen.this,contactActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

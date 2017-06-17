@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -124,6 +125,21 @@ public class glossary extends AppCompatActivity {
         final float scale = getResources().getDisplayMetrics().density;
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.app_bar,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()== R.id.action_about){
+            startActivity(new Intent(glossary.this,about.class));
+        }
+        else if(item.getItemId() == R.id.action_contact){
+            startActivity(new Intent(glossary.this,contactActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
