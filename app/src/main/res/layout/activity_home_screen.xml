@@ -20,34 +20,38 @@
             android:id="@+id/greenRectangle"
             android:layout_width="200dp"
             android:layout_height="150dp"
-            app:srcCompat="@drawable/green_rectangle"
+            app:srcCompat="@drawable/literallyJustAGreenRectangle"
+
             android:layout_alignTop="@+id/redRectangle"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            />
+            android:layout_alignStart="@+id/stop"
+            android:layout_marginStart="44dp" />
         />
 
         <ImageView
             android:id="@+id/redRectangle"
             android:layout_width="200dp"
             android:layout_height="150dp"
-            app:srcCompat="@drawable/red_rectangle"
+
+            app:srcCompat="@drawable/literallyJustARedRectangle"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/greenPlus" />
 
 
         <ImageButton
             android:id="@+id/redPlus"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/redMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@null"
-            app:srcCompat="@drawable/ic_plus" />
+            app:srcCompat="@drawable/ic_plus"
+            android:layout_marginLeft="10dp"
+
+            android:layout_alignTop="@+id/redMinus"
+            android:layout_alignParentStart="true" />
         <TextView
             android:id="@+id/redScore"
 
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
             android:layout_centerVertical="true"
@@ -60,21 +64,23 @@
             android:textSize="24sp" />
         <ImageButton
             android:id="@+id/redMinus"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@null"
             app:srcCompat="@drawable/ic_minus"
             android:layout_alignTop="@+id/greenPlus"
-            android:layout_toStartOf="@+id/greenRectangle" />
+            android:layout_marginRight="10dp"
+            android:layout_alignStart="@+id/stop" />
 
         <ImageButton
             android:id="@+id/greenPlus"
             android:background="@null"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_plus"
             android:layout_alignTop="@+id/greenMinus"
-            android:layout_toEndOf="@+id/redRectangle" />
+            android:layout_marginLeft="10dp"
+            android:layout_alignStart="@+id/greenRectangle" />
         <TextView
             android:id="@+id/greenScore"
             android:layout_width="wrap_content"
@@ -86,17 +92,17 @@
             android:textSize="24sp"
             android:layout_alignBaseline="@+id/redScore"
             android:layout_alignBottom="@+id/redScore"
-            android:layout_toLeftOf="@id/greenMinus"
-            android:layout_toRightOf="@+id/greenPlus" />
+            android:layout_alignStart="@+id/reset" />
 
         <ImageButton
             android:id="@+id/greenMinus"
             android:background="@null"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_minus" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_minus"
+            android:layout_marginRight="10dp"
+            android:layout_alignBottom="@+id/greenScore"
+            android:layout_alignEnd="@+id/time" />
 
 
         <Button
@@ -106,79 +112,82 @@
             android:background="@color/colorPrimary"
             android:text="Start"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="18dp"
             android:layout_above="@+id/redRectangle"
-            android:layout_alignStart="@+id/time" />
+            android:layout_alignStart="@+id/time"
+            android:layout_marginStart="13dp" />
 
         <Button
         android:id="@+id/stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="Stop"
+            android:layout_centerInParent="true"
         android:textColor="@android:color/white"
         android:layout_alignBaseline="@+id/start"
         android:layout_alignBottom="@+id/start"
-        android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/addMinute"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="34dp"
-            android:ems="10"
-            android:focusableInTouchMode="false"
-            android:gravity="center"
-            android:inputType="number|time"
-            android:text="03:00"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            tools:ignore="TextViewEdits" />
+        android:layout_centerHorizontal="true"
+            android:text="Stop"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
 
         <Button
             android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:layout_toRightOf="@id/stop"
             android:text="Reset"
             android:textColor="@android:color/white"
+            android:layout_marginRight="10dp"
+
+            android:layout_marginEnd="14dp"
             android:layout_alignBaseline="@+id/stop"
             android:layout_alignBottom="@+id/stop"
-            android:layout_toEndOf="@+id/greenPlus"
-            android:layout_marginStart="17dp" />
+            android:layout_alignEnd="@+id/time" />
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:inputType="number|time"
+            android:text="03:00"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            tools:ignore="TextViewEdits"
+            android:layout_alignBottom="@+id/addMinute"
+            android:layout_centerHorizontal="true" />
+
 
         <Button
             android:id="@+id/addMinute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/start"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:layout_toLeftOf="@+id/time"
             android:background="@color/colorPrimary"
             android:text="+"
+            android:layout_marginStart="10dp"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/start" />
 
         <Button
             android:id="@+id/removeMinute"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:text="-"
             android:textColor="@android:color/white"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
             android:textSize="30sp"
-            android:layout_toRightOf="@+id/time"
-            android:layout_alignBaseline="@+id/addMinute"
-            android:layout_alignBottom="@+id/addMinute"
+
+            android:layout_alignBottom="@+id/time"
             android:layout_alignStart="@+id/reset" />
 
     </RelativeLayout>
@@ -195,6 +204,8 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/navigation"
         android:layout_alignParentStart="true" />
+
+
 
 
 </RelativeLayout>
