@@ -2,17 +2,11 @@ package com.example.zach.digitalfencingref;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class contactActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
-
+public class contact extends AppCompatActivity {
 
 
     @Override
@@ -20,8 +14,6 @@ public class contactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
 
     }
     @Override
@@ -32,7 +24,7 @@ public class contactActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId()== R.id.action_about){
-            startActivity(new Intent(contactActivity.this,about.class));
+            startActivity(new Intent(contact.this,about.class));
         }
         else if(item.getItemId() == R.id.action_contact){
             //do nothing

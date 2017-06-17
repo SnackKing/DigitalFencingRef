@@ -216,7 +216,7 @@ public  class HomeScreen extends AppCompatActivity {
             startActivity(new Intent(HomeScreen.this,about.class));
         }
         else if(item.getItemId() == R.id.action_contact){
-            startActivity(new Intent(HomeScreen.this,contactActivity.class));
+            startActivity(new Intent(HomeScreen.this,contact.class));
         }
         return super.onOptionsItemSelected(item);
     }

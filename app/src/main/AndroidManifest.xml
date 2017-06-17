@@ -43,7 +43,7 @@
             android:name=".about"
             android:label="About" />
         <activity
-            android:name=".contactActivity"
+            android:name=".contact"
             android:label="@string/title_activity_contact"></activity>
     </application>
 

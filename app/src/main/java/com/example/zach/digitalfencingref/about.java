@@ -2,12 +2,9 @@ package com.example.zach.digitalfencingref;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class about extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class about extends AppCompatActivity {
             //do nothing
         }
         else if(item.getItemId() == R.id.action_contact){
-            startActivity(new Intent(about.this,contactActivity.class));
+            startActivity(new Intent(about.this,contact.class));
         }
        else if (item.getItemId() == android.R.id.home ) {
             finish();

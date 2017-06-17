@@ -1,7 +1,9 @@
 package com.example.zach.digitalfencingref;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -14,18 +16,21 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zach.digitalfencingref.ExpandableListAdapter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static com.example.zach.digitalfencingref.R.id.stop;
 
 public class glossary extends AppCompatActivity {
     String[] groupList;
     String[] childList;
     Map<String, List<String>> collection;
     ExpandableListView expListView;
+    private String currentTime;
+    private boolean isCountingDown;
 
     private TextView mTextMessage;
 
@@ -45,11 +50,12 @@ public class glossary extends AppCompatActivity {
                 case R.id.action_video:
                    ;
 //                    mTextMessage.setText(R.string.title_dashboard);
-                    String currentTime = getIntent().getStringExtra("currentTime");
-                    boolean isCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
                     Intent videoIntent = new Intent(glossary.this, video.class);
+                    String cur = currentTime;
+                    boolean con = isCountingDown;
                     videoIntent.putExtra("currentTime",currentTime);
                     videoIntent.putExtra("isCountingDown",isCountingDown);
+                    startActivityForResult(videoIntent,0);
 
                     finish();
                     return true;
@@ -69,6 +75,33 @@ public class glossary extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        String timeFromEarlierActivity = getIntent().getStringExtra("currentTime");
+        boolean wasCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
+        isCountingDown = wasCountingDown;
+        currentTime = timeFromEarlierActivity;
+        if(wasCountingDown) {
+            int minutes = Integer.parseInt(timeFromEarlierActivity.substring(0, timeFromEarlierActivity.indexOf(":")));
+            int seconds = Integer.parseInt(timeFromEarlierActivity.substring(timeFromEarlierActivity.indexOf(":") + 1));
+            long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
+            long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
+            long total = minutesToMilli + secondsToMilli;
+            CountDownTimer countDownTimer  = new CountDownTimer(total, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                    currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                }
+
+                @Override
+                public void onFinish() {
+                    Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivityIfNeeded(homeIntent, 0);
+                }
+            }.start();
+
+        }
 
         groupList = getResources().getStringArray(R.array.terms);
         childList = getResources().getStringArray(R.array.definitions);
@@ -137,7 +170,7 @@ public class glossary extends AppCompatActivity {
             startActivity(new Intent(glossary.this,about.class));
         }
         else if(item.getItemId() == R.id.action_contact){
-            startActivity(new Intent(glossary.this,contactActivity.class));
+            startActivity(new Intent(glossary.this,contact.class));
         }
         return super.onOptionsItemSelected(item);
     }
