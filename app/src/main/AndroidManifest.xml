@@ -18,15 +18,15 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Scoring"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeScreen"
-            android:label="Fencing Referee Assistant"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
-            <intent-filter>
+            <intent-filter android:label="@string/title_score">
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

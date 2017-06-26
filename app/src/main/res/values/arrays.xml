@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="terms">
+            <item>Allez</item>
+            <item>Appel</item>
+            <item>Attack</item>
+            <item>Balestra</item>
+            <item>Beat</item>
+            <item>Bind</item>
+            <item>Black Card</item>
+            <item>Change of Engagement</item>
+            <item>Compound Attack</item>
+            <item>Corps-à-corps</item>
+            <item>Coulé</item>
+            <item>Counter-Attack</item>
+            <item>Counter-Beat</item>
+            <item>Counter-Parry</item>
+            <item>Counter-Riposte</item>
+            <item>Disengage</item>
+            <item>Double</item>
+            <item>Feint</item>
+            <item>Flèche</item>
+            <item>Parry</item>
+            <item>Passé</item>
+            <item>Point-in-Line</item>
+            <item>Prêt</item>
+            <item>Riposte</item>
+            <item>Salute</item>
+            <item>Simultaneous</item>
+            <item>Target Area</item>
+            <item>Yellow Card</item>
+
+        </string-array>
+    <string-array name="definitions">
+        <item>French for "go", command used to commence action in a match. (Sequence is "En garde! (Etes vous) prêts? Allez!" for male competitors; for females, "prêts" with a silent t and s is replaced by "prêtes" where the t is pronounced)</item>
+        <item>Stamping the front foot to the ground, to produce a sound to distract or startle the opponent. This may be made during an advance, or directly from an en garde position. It may precede a lunge, or be used merely as a distraction. An appel is also sometimes called a \'half-Advance\'. This action may also be used to halt a bout, often by stamping the trailing foot insistently.</item>
+        <item>The initial offensive action made by extending the sword arm and continuously threatening the valid target of the opponent with the point (or blade at sabre).</item>
+        <item>A footwork preparation, consisting of a jump forwards. It is most often, but not always, immediately followed by a lunge. It is faster than an advance forward, which helps change the rhythm and timing of moves. ‘Balestra’ is the French term for sudden leap.</item>
+        <item>A simple preparatory motion. A sharp controlled blow to the middle or \'weak\' of the opponents blade, with the objective of provoking a reaction or creating an opening. The action should knock the opponent\'s blade aside or out of line.</item>
+        <item> An action in which one fencer forces the opponent\'s blade into the diagonally opposite line by taking it with the guard and forte of his own blade</item>
+        <item>This card is used to indicate the most serious offences in a fencing competition. The offending fencer is expelled immediately from the event or tournament, regardless of whether he or she had any prior warnings. A black card can also be used to expel a third party disrupting the match.</item>
+        <item>An engagement of the opponent\'s blade in the opposite line. Changes of engagement are sometimes performed to place one fencer\'s blade on the side of his/her opponent’s blade that he feels has an advantage, or could be just to fool with the opponent. Often, a bout with a left-handed fencer versus a right-handed will see both of them jockey for position with changes of engagements.</item>
+        <item>Also composed attack. An attack or riposte incorporating one or more feints to the opposite line that the action finishes in. A compound attack does not necessarily lose right of way during its execution; it just comprises more than one indirect action. Compound attacks are usually used to draw multiple reactions from an opponent, or against an opponent who uses complex parries. A counter-attack into a compound attack must hit a clear tempo ahead of the compound attack to be valid.</item>
+        <item>(French "body-to-body") The action of two fencers coming into physical contact with one another with any portion of their bodies or hilts. This is illegal in foil and sabre bouts, and is cause for the Referee (Director) to halt the fencing action. In épée, it does not violate the spirit of the game, but contact may not be accompanied with any brutality or forcefulness (intentional or not).</item>
+        <item>Also graze, glisé, or glissade. An attack or feint that slides along the opponent\'s blade. In performing a sliding action along the opponent’s blade, it is generally the goal to establish leverage by moving forte against foible, or forte to forte.</item>
+        <item>An attack made against, or into, an attack initiated by the opponent. In foil and sabre, a counter-attack does not have the right-of-way against the opponent’s initiated attack. Counter-attacking is a common tactic in épée, where one may gain a touch by hitting first, and avoiding the opponent’s attack.</item>
+        <item> A beat that is preceded by a circle under the opponent\'s blade. This can provoke a reaction with a beat from an unexpected quarter.</item>
+        <item> A parry made in the opposite line to the attack; ie. the defender first comes around to the opposite side of the opponent\'s blade</item>
+        <item>An attack that follows a parry of the opponent\'s riposte.</item>
+        <item>A circular movement of the blade that deceives the opponent\'s parry, removes the blades from engagement, or changes the line of engagement.</item>
+        <item>(Epee)Two attacks that arrive within 40-50 ms of each other.</item>
+        <item>An attack into one line with the intention of switching to another line before the attack is completed.</item>
+        <item>An attack in which the aggressor leaps off his leading foot, attempts to make the hit, and then passes the opponent at a run. French for "Arrow"</item>
+        <item>A block of the attack, made with the forte of one\'s own blade; also parade.</item>
+        <item>An attack that passes the target without hitting.</item>
+        <item>An established threat made with the extended arm. A point-in-line is a static threat, created by one fencer by extending the weapon and arm prior to any actions in a phrase. In foil and sabre, a Point-in-line has right of way, therefore, if the line is not withdrawn, any attack launched by the opponent does not have right of way</item>
+        <item>French term for "ready." Used by the judge after the command \'en garde\' and before the command \'allez.\'</item>
+        <item>An offensive action made immediately after a parry of the opponent\'s attack.</item>
+        <item>With the weapon, a customary acknowledgement of one\'s opponent and referee at the start and end of the bout.</item>
+        <item>In foil and sabre, two attacks for which the right-of-way is too close to determine.</item>
+        <item>The area delimited for valid hits in that weapon. Foil target area consists of the entire torso, including the groin and the bottom of the mask which covers the lame, and down to the waist in back. Head, arms and legs are considered off-target in foil. Épée uses the entire body for target. Sabre uses all the body area above the waist, except the hands and the back of the head.</item>
+        <item> Used to indicate a minor rule infraction by one of the fencers.</item>
+    </string-array>
+
+
+</resources>
