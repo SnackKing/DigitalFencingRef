@@ -19,7 +19,9 @@ import java.util.concurrent.TimeUnit;
 
 public  class HomeScreen extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private TextView time;
+    private Button stop;
+    private Button start;
     private String currentTime;
     private CountDownTimer countDownTimer;
     private boolean isCountingDown;
@@ -34,7 +36,7 @@ public  class HomeScreen extends AppCompatActivity {
         ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
         ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
         ImageButton greenMinus = (ImageButton) findViewById(R.id.greenMinus);
-        final  Button start = (Button) findViewById(R.id.start);
+        final Button start = (Button) findViewById(R.id.start);
         final Button stop = (Button) findViewById(R.id.stop);
         Button reset = (Button) findViewById(R.id.reset);
         Button addMinute = (Button) findViewById(R.id.addMinute);
@@ -42,7 +44,7 @@ public  class HomeScreen extends AppCompatActivity {
 
         final TextView redScore = (TextView) findViewById(R.id.redScore);
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
-        final TextView time = (TextView) findViewById(R.id.time);
+         time = (TextView) findViewById(R.id.time);
         currentTime = time.getText().toString();
 
 
@@ -115,37 +117,8 @@ public  class HomeScreen extends AppCompatActivity {
                 stop.setClickable(true);
                 currentTime = time.getText().toString();
                 isCountingDown = true;
-                int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
-                int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
-                long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
-                long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
-                long total = minutesToMilli + secondsToMilli;
-                final SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
-                SharedPreferences.Editor edit= sharedPreferences.edit();
-                edit.putBoolean("stop", false);
-                edit.apply();
-                 countDownTimer = new CountDownTimer(total,1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        currentTime = time.getText().toString();
+                createCountDownTimer();
 
-                        if (sharedPreferences.getBoolean("stop", true)) {
-                            countDownTimer.cancel();
-                            start.setClickable(true);
-                            stop.setClickable(false);
-                        }
-                        else {
-                            String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-                            time.setText(currentTime);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        time.setText("0:00");
-                    }
-                }.start();
             }
         });
         stop.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +139,8 @@ public  class HomeScreen extends AppCompatActivity {
                 stop.setClickable(false);
                 time.setText("03:00");
                 currentTime = "03:00";
+                isCountingDown = false;
+
 
             }
         });
@@ -182,8 +157,14 @@ public  class HomeScreen extends AppCompatActivity {
                 else{
                     newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                 }
-                currentTime = newTime;
-                time.setText(newTime);
+                if(!isCountingDown) {
+                    time.setText(newTime);
+                }
+                else {
+                    countDownTimer.cancel();
+                    time.setText(newTime);
+                    createCountDownTimer();
+                }
             }
         });
         removeMinute.setOnClickListener(new View.OnClickListener() {
@@ -197,10 +178,17 @@ public  class HomeScreen extends AppCompatActivity {
                     if (oldTime.charAt(0) == '0') {
                         newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                     } else {
-                        newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+                        newTime =  String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                     }
-                    currentTime = newTime;
-                    time.setText(newTime);
+                    if(!isCountingDown) {
+                        time.setText(newTime);
+                    }
+                    else {
+                        countDownTimer.cancel();
+                        time.setText(newTime);
+                        createCountDownTimer();
+                    }
+
                 }
             }
         });
@@ -219,6 +207,43 @@ public  class HomeScreen extends AppCompatActivity {
             startActivity(new Intent(HomeScreen.this,contact.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void createCountDownTimer(){
+        currentTime = time.getText().toString();
+        int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
+        int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
+        long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
+        long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
+        long total = minutesToMilli + secondsToMilli;
+        final SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+        SharedPreferences.Editor edit= sharedPreferences.edit();
+        edit.putBoolean("stop", false);
+        edit.apply();
+
+
+        countDownTimer = new CountDownTimer(total,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                currentTime = time.getText().toString();
+
+                if (sharedPreferences.getBoolean("stop", true)) {
+                    countDownTimer.cancel();
+                    start.setClickable(true);
+                    stop.setClickable(false);
+                }
+                else {
+                    String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                    time.setText(currentTime);
+                }
+
+            }
+
+            @Override
+            public void onFinish() {
+                time.setText("0:00");
+            }
+        }.start();
+
     }
 
 

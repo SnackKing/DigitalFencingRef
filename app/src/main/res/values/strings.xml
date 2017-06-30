@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fencing Referee Assistant</string>
+    <string name="app_name">FenceBetter</string>
     <string name="title_score">Scoring</string>
     <string name="title_camera">Video</string>
     <string name="title_stats">Glossary</string>
