@@ -1,4 +1,4 @@
-package com.example.zach.digitalfencingref;
+package com.google.zach.digitalfencingref;
 
 import android.Manifest;
 import android.content.Context;
@@ -128,7 +128,6 @@ public class video extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startRecordingVideo();
                 handlePermisions();
             }
         });
@@ -166,52 +165,28 @@ public class video extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    // permission was granted
                     startRecordingVideo();
 
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // permission denied
                     Toast.makeText(this, "Permission not granted", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+
         }
     }
     public void startRecordingVideo() {
-//        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
-//
-//
-//            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//            File mediaFile = new File(
-//                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/myvideo.mp4");
-//            videoUri = Uri.fromFile(mediaFile);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
-//            startActivityForResult(intent, VIDEO_CAPTURE);
-//        } else {
-//            Toast.makeText(this, "No camera on device", Toast.LENGTH_LONG).show();
-//        }
+
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == VIDEO_CAPTURE) {
-//            if (resultCode == RESULT_OK) {
-//                Toast.makeText(this, "Video has been saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
-//                playbackRecordedVideo();
-//            } else if (resultCode == RESULT_CANCELED) {
-//                Toast.makeText(this, "Video recording cancelled.",  Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(this, "Failed to record video",  Toast.LENGTH_LONG).show();
-//            }
-//        }
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             videoView.setVideoURI(videoUri);

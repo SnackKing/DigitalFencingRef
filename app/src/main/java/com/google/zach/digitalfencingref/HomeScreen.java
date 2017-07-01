@@ -1,4 +1,4 @@
-package com.example.zach.digitalfencingref;
+package com.google.zach.digitalfencingref;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,11 +20,12 @@ import java.util.concurrent.TimeUnit;
 public  class HomeScreen extends AppCompatActivity {
 
     private TextView time;
-    private Button stop;
-    private Button start;
+     Button stop;
+     Button start;
     private String currentTime;
     private CountDownTimer countDownTimer;
     private boolean isCountingDown;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -32,15 +33,18 @@ public  class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         isCountingDown = false;
+        sharedPreferences = this.getSharedPreferences("count", 0);
         ImageButton redPlus = (ImageButton) findViewById(R.id.redPlus);
         ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
         ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
         ImageButton greenMinus = (ImageButton) findViewById(R.id.greenMinus);
-        final Button start = (Button) findViewById(R.id.start);
-        final Button stop = (Button) findViewById(R.id.stop);
+        start = (Button) findViewById(R.id.start);
+        stop = (Button) findViewById(R.id.stop);
+
         Button reset = (Button) findViewById(R.id.reset);
         Button addMinute = (Button) findViewById(R.id.addMinute);
         Button removeMinute = (Button) findViewById(R.id.removeMinute);
+        Button resetScore = (Button) findViewById(R.id.resetScore);
 
         final TextView redScore = (TextView) findViewById(R.id.redScore);
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
@@ -192,6 +196,13 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         });
+        resetScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redScore.setText("0");
+                greenScore.setText("0");
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -215,7 +226,7 @@ public  class HomeScreen extends AppCompatActivity {
         long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
         long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
         long total = minutesToMilli + secondsToMilli;
-        final SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+        sharedPreferences = getSharedPreferences("count", 0);
         SharedPreferences.Editor edit= sharedPreferences.edit();
         edit.putBoolean("stop", false);
         edit.apply();

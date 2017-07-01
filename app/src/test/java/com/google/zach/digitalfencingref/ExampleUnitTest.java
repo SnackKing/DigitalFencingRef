@@ -1,4 +1,4 @@
-package com.example.zach.digitalfencingref;
+package com.google.zach.digitalfencingref;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.zach.digitalfencingref;
+package com.google.zach.digitalfencingref;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import static com.example.zach.digitalfencingref.R.id.stop;
 
 public class glossary extends AppCompatActivity {
     String[] groupList;
