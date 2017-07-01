@@ -19,12 +19,34 @@ import java.util.concurrent.TimeUnit;
 
 public  class HomeScreen extends AppCompatActivity {
 
+    /*
+      Contains the current time on the CountDownTimer
+     */
     private TextView time;
+    /*
+        Cancels the current CountDownTimer
+     */
      Button stop;
+    /*
+        Begins a new CountDownTimer starting at @String currentTIme
+     */
      Button start;
+    /*
+        The current time displayed in @TextView time
+     */
     private String currentTime;
+    /*
+        The current CountDownTimer in use
+     */
     private CountDownTimer countDownTimer;
+    /*
+        Whether or not the last countDownTimer has been canceled or not.
+        Used to pass to the other activities
+     */
     private boolean isCountingDown;
+    /*
+        Used to stop the timer from a different activity.
+     */
     SharedPreferences sharedPreferences;
 
 
@@ -34,6 +56,7 @@ public  class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         isCountingDown = false;
         sharedPreferences = this.getSharedPreferences("count", 0);
+        //Initialize all components
         ImageButton redPlus = (ImageButton) findViewById(R.id.redPlus);
         ImageButton redMinus = (ImageButton) findViewById(R.id.redMinus);
         ImageButton greenPlus = (ImageButton) findViewById(R.id.greenPlus);
@@ -80,7 +103,7 @@ public  class HomeScreen extends AppCompatActivity {
                 return false;
             }
         });
-
+        //Increases the score for the fencer on the left
         redPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +111,7 @@ public  class HomeScreen extends AppCompatActivity {
                 redScore.setText(String.valueOf(oldValue+1));
             }
         });
+        //Decreases the score for the fener on the left
         redMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +121,7 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         });
+        //Increases the score for the fencer on the right
         greenPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +129,7 @@ public  class HomeScreen extends AppCompatActivity {
                 greenScore.setText(String.valueOf(oldValue+1));
             }
         });
+        //Decreases the score for the fencer on the right
         greenMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +140,10 @@ public  class HomeScreen extends AppCompatActivity {
             }
         });
 
+        /*
+        Resumes the timer by creating a new CountDownTimer starting at whatever time is
+        currently in the TextView
+         */
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +155,10 @@ public  class HomeScreen extends AppCompatActivity {
 
             }
         });
+        /*
+        Stops the timer by canceling the last CountDownTimer that was in effect
+
+         */
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +168,9 @@ public  class HomeScreen extends AppCompatActivity {
                 isCountingDown = false;
             }
         });
-
+        /*
+        Resets the timer to the default time of 3 minutes. Stops the count down.
+         */
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +184,11 @@ public  class HomeScreen extends AppCompatActivity {
 
             }
         });
-
+        /*
+        Adds 1 minute to the countdown. If the timer is running, then the current CountDownTimer
+        must be cancelled so that a new one at the newly designated time can be created immediately
+         after the TextView is updated.
+         */
         addMinute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,9 +201,11 @@ public  class HomeScreen extends AppCompatActivity {
                 else{
                     newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                 }
+                //timer not active, simply update textview
                 if(!isCountingDown) {
                     time.setText(newTime);
                 }
+                //timer active, cancel timer and create new one
                 else {
                     countDownTimer.cancel();
                     time.setText(newTime);
@@ -171,6 +213,11 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         });
+         /*
+        Removes 1 minute to the countdown. If the timer is running, then the current CountDownTimer
+        must be cancelled so that a new one at the newly designated time can be created immediately
+         after the TextView is updated.
+         */
         removeMinute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,9 +231,11 @@ public  class HomeScreen extends AppCompatActivity {
                     } else {
                         newTime =  String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                     }
+                    //timer not active, simply update textview
                     if(!isCountingDown) {
                         time.setText(newTime);
                     }
+                    //timer active, cancel timer and create new one
                     else {
                         countDownTimer.cancel();
                         time.setText(newTime);
@@ -196,6 +245,7 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         });
+        //Resets both scores to 0.
         resetScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,8 +269,10 @@ public  class HomeScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    //Creates a new CountDownTimer beginning at whatever time was left in the TextView
     private void createCountDownTimer(){
         currentTime = time.getText().toString();
+        //compute the total amount of remaining milliseconds
         int minutes = Integer.parseInt(currentTime.substring(0,currentTime.indexOf(":")));
         int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
         long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
@@ -236,12 +288,13 @@ public  class HomeScreen extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 currentTime = time.getText().toString();
-
+                //if the timer is stopped in the video activity, this will run
                 if (sharedPreferences.getBoolean("stop", true)) {
                     countDownTimer.cancel();
                     start.setClickable(true);
                     stop.setClickable(false);
                 }
+                //update the TextView on every tick
                 else {
                     String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                     time.setText(currentTime);
@@ -250,8 +303,11 @@ public  class HomeScreen extends AppCompatActivity {
             }
 
             @Override
+            //bring this activity to the front when the timer runs out
             public void onFinish() {
                 time.setText("0:00");
+                start.setClickable(true);
+                stop.setClickable(false);
             }
         }.start();
 

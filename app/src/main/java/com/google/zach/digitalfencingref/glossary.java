@@ -78,6 +78,11 @@ public class glossary extends AppCompatActivity {
         boolean wasCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
         isCountingDown = wasCountingDown;
         currentTime = timeFromEarlierActivity;
+        /*
+        Although no timer is displayed in this activity, a timer must continue running behind the
+        scenes for the case where the user switches from the glossary activity to the video activity
+        so there is no gap in time when switching.
+         */
         if(wasCountingDown) {
             int minutes = Integer.parseInt(timeFromEarlierActivity.substring(0, timeFromEarlierActivity.indexOf(":")));
             int seconds = Integer.parseInt(timeFromEarlierActivity.substring(timeFromEarlierActivity.indexOf(":") + 1));
@@ -93,6 +98,7 @@ public class glossary extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
+                    //Bring the home screen to the front
                     Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
@@ -100,7 +106,7 @@ public class glossary extends AppCompatActivity {
             }.start();
 
         }
-
+        //get arrays of terms and their definitions
         groupList = getResources().getStringArray(R.array.terms);
         childList = getResources().getStringArray(R.array.definitions);
 

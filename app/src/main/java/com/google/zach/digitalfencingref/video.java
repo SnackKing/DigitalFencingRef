@@ -82,8 +82,12 @@ public class video extends AppCompatActivity {
         Button stop = (Button) findViewById(R.id.stop);
         Button play = (Button) findViewById(R.id.play);
         final TextView timer = (TextView) findViewById(R.id.time);
+        //Leave the timer at the time from the last activity.
         timer.setText(timeFromEarlierActivity);
-
+        /*
+        If the timer was running when leaving the last activity, then a new CountDownTimer must
+        be created beginning at the time from the last CountDownTimer.
+         */
         if(wasCountingDown) {
             int minutes = Integer.parseInt(timeFromEarlierActivity.substring(0, timeFromEarlierActivity.indexOf(":")));
             int seconds = Integer.parseInt(timeFromEarlierActivity.substring(timeFromEarlierActivity.indexOf(":") + 1));
@@ -102,11 +106,13 @@ public class video extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     timer.setText("0:00");
+                    //Bring the home screen to the front
                     Intent homeIntent = new Intent(video.this,HomeScreen.class);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
                 }
             }.start();
+            //Cancel the timer that is in effect. Also cancels the timer that is in the home screen.
             stop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,6 +142,9 @@ public class video extends AppCompatActivity {
 
 
     }
+    /*
+    Check to see if the app has the permissions needed to take video
+     */
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -147,11 +156,15 @@ public class video extends AppCompatActivity {
         return true;
     }
 
-    public void handlePermisions(){
+    /*
 
+     */
+    public void handlePermisions(){
+        //If the app does not have the needed permissions, ask again
         if(!hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISION_ALL);
         }
+        //If all permissions are granted, then begin recording
         else{
             startRecordingVideo();
         }
@@ -186,6 +199,7 @@ public class video extends AppCompatActivity {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
+    //Play recorded video in the VideoView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
@@ -196,13 +210,13 @@ public class video extends AppCompatActivity {
         }
     }
 
-    public void playbackRecordedVideo() {
-        VideoView mVideoView = (VideoView) findViewById(R.id.videoView);
-        mVideoView.setVideoURI(videoUri);
-        mVideoView.setMediaController(new MediaController(this));
-        mVideoView.requestFocus();
-        mVideoView.start();
-    }
+//    public void playbackRecordedVideo() {
+//        VideoView mVideoView = (VideoView) findViewById(R.id.videoView);
+//        mVideoView.setVideoURI(videoUri);
+//        mVideoView.setMediaController(new MediaController(this));
+//        mVideoView.requestFocus();
+//        mVideoView.start();
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.app_bar,menu);
