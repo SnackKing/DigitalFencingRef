@@ -1,4 +1,4 @@
-package com.google.zach.digitalfencingref;
+package com.google.zach.OnTargetFencing;
 
 import android.Manifest;
 import android.content.Context;

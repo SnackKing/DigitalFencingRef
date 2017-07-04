@@ -1,4 +1,4 @@
-package com.google.zach.digitalfencingref;
+package com.google.zach.OnTargetFencing;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -293,6 +293,7 @@ public  class HomeScreen extends AppCompatActivity {
                     countDownTimer.cancel();
                     start.setClickable(true);
                     stop.setClickable(false);
+                    isCountingDown=false;
                 }
                 //update the TextView on every tick
                 else {

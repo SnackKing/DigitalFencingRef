@@ -1,4 +1,4 @@
-package com.google.zach.digitalfencingref;
+package com.google.zach.OnTargetFencing;
 import java.util.List;
 import java.util.Map;
 import android.app.Activity;

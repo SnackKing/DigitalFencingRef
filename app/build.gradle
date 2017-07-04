@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.example.zach.digitalfencingref"
+        applicationId "com.google.zach.OnTargetFencing"
         minSdkVersion 23
         targetSdkVersion 24
         versionCode 1
