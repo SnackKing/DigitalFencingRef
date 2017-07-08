@@ -3,8 +3,10 @@ package com.google.zach.OnTargetFencing;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class about extends AppCompatActivity {
 
@@ -15,6 +17,9 @@ public class about extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView textview = (TextView) findViewById(R.id.about);
+        textview.setMovementMethod(new ScrollingMovementMethod());
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -31,6 +36,10 @@ public class about extends AppCompatActivity {
         }
        else if (item.getItemId() == android.R.id.home ) {
             finish();
+            return true;
+        }
+        else if(item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(about.this,faq.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

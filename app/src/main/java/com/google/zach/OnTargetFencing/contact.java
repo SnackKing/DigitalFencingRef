@@ -26,8 +26,13 @@ public class contact extends AppCompatActivity {
         if(item.getItemId()== R.id.action_about){
             startActivity(new Intent(contact.this,about.class));
         }
+
         else if(item.getItemId() == R.id.action_contact){
             //do nothing
+        }
+        else if(item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(contact.this,faq.class));
+            return true;
         }
         else if (item.getItemId() == android.R.id.home ) {
             finish();

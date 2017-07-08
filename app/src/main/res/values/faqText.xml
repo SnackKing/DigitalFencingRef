@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "heading"> Frequently Asked Questions \n \n </string>
+    <string name = "q1">How does this timer work? Is the same timer used on every screen? \n</string>
+    <string name = "a1">\n Each activity uses a different timer, however when you change from the scoring screen to
+        the video or glossary screen, the time gets carried over to a new timer that is created.
+        So as a result the same time will be held in every activity. \n \n</string>
+
+       <string name = "q2"> What if I change from the scoring screen to the glossary screen to the video or scoring screen?\n</string>
+        <string name = "a2">\n Even though it is not displayed, if you change to the glossary screen while the timer is
+        running in any activity, then a new timer is created that will continue to run behind the scenes,
+        so you won\'t see if. That way you can change activities without worrying about there being
+        a gap in time. \n \n</string>
+
+       <string name = "q3"> Why is the timer sometimes off by a second between activities? \n</string>
+       <string name = "a3"> \n When you change activities, the timer will get carried over to create a new timer in the
+        newly accessed activity, which can sometimes result in a second delay when changing activities.
+        This will be resolved during the next change in activities. \n \n</string>
+
+        <string name = "q4">Why can I only stop the timer in the video activity, but not resume it? \n</string>
+
+        <string name = "a4">\n This was a design decision  that was intended to help control the
+        intended flow of the app. After recording a touch, it was intended that the user would pause
+        the timer and navigate to the scoring activity to allocate points, and then restart the timer
+        and move back to video mode. In the future this might be changed so that the timer can be
+        resumed from the video mode in order to reduce the delay between starting the timer and
+        launching the camera. \n \n</string>
+
+        <string name = "q5">Are you affiliated with a particular club or group? \n</string>
+
+        <string name = "a5"> \n Although I am part of a fencing club at Ohio State, this application
+        was made independently of any club or organization. The design and name are not intentonally
+        derived from any existing club or organization, and any similarities are coincidential and
+        are not intended.</string>
+
+
+</resources>

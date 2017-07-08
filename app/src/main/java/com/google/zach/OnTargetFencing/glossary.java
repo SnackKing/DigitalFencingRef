@@ -44,6 +44,7 @@ public class glossary extends AppCompatActivity {
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
 
+
                     return true;
                 case R.id.action_video:
                    ;
@@ -55,7 +56,6 @@ public class glossary extends AppCompatActivity {
                     videoIntent.putExtra("isCountingDown",isCountingDown);
                     startActivityForResult(videoIntent,0);
 
-                    finish();
                     return true;
                 case R.id.action_stats:
 //                    mTextMessage.setText(R.string.title_notifications);
@@ -175,6 +175,10 @@ public class glossary extends AppCompatActivity {
         }
         else if(item.getItemId() == R.id.action_contact){
             startActivity(new Intent(glossary.this,contact.class));
+        }
+        else if(item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(glossary.this,faq.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

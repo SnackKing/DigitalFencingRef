@@ -1,6 +1,8 @@
 package com.google.zach.OnTargetFencing;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -9,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -54,6 +58,8 @@ public  class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        AppRater.app_launched(this);
+
         isCountingDown = false;
         sharedPreferences = this.getSharedPreferences("count", 0);
         //Initialize all components
@@ -266,6 +272,10 @@ public  class HomeScreen extends AppCompatActivity {
         }
         else if(item.getItemId() == R.id.action_contact){
             startActivity(new Intent(HomeScreen.this,contact.class));
+        }
+        else if(item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(HomeScreen.this,faq.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name = "about_text">Thank you for downloading this app! As the sole developer of this program, I put a lot of time and effort into to in order to make sure that it meets the standards that many users come to expect of Android applications. \n
+    <string name = "about_text">Thank you for downloading this app! As the sole developer of this program, I put a lot of time and effort into it in order to make sure that it meets the standards that many users come to expect of Android applications. \n
     \n I developed this app during the Summer of 2017, after finishing my sophomore year in Computer Science at The Ohio State University.\n
     \n I was inspired to create this app when I decided to combine two things that I am very passionate about: fencing and coding. Combined with one of my goals of publishing an app on the Google Play Store, I got the idea to develop an app. After many hours of work, the product on your screen was born! \n
     \n I am committed to ensuring that this app is as functional as possible on any device. If you have any questions, concerns, or suggestions, please contact my developer email, specified in the contact menu. \n
     \n Thanks! \n
-    \n Zachary Allegretti</string>
+    \n Zachary Allegretti\n
+    \n \n
+    \n This app is in no way affiliated with any particular club or organization. This app is completely non-profit, as it is free to download and no advertisements are used.</string>
 </resources>

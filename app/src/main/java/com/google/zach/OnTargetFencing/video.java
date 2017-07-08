@@ -230,6 +230,10 @@ public class video extends AppCompatActivity {
         else if(item.getItemId() == R.id.action_contact){
             startActivity(new Intent(video.this,contact.class));
         }
+        else if(item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(video.this,faq.class));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -22,6 +22,7 @@
             android:layout_height="150dp"
             app:srcCompat="@drawable/green_rect"
 
+            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/redRectangle"
             android:layout_alignStart="@+id/stop"
             android:layout_marginStart="44dp" />
@@ -90,9 +91,11 @@
             android:text="0"
             android:gravity="center"
             android:textSize="24sp"
+            android:layout_toLeftOf="@id/greenMinus"
+            android:layout_toRightOf="@id/greenPlus"
             android:layout_alignBaseline="@+id/redScore"
             android:layout_alignBottom="@+id/redScore"
-            android:layout_alignStart="@+id/reset" />
+            />
 
         <ImageButton
             android:id="@+id/greenMinus"
@@ -102,7 +105,7 @@
             app:srcCompat="@drawable/ic_minus"
             android:layout_marginRight="10dp"
             android:layout_alignBottom="@+id/greenScore"
-            android:layout_alignEnd="@+id/time" />
+            android:layout_alignParentEnd="true" />
 
 
         <Button
