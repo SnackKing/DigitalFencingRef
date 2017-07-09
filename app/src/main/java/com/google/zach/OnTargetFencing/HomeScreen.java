@@ -17,9 +17,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
 
 
 import java.util.concurrent.TimeUnit;
+
+import static android.R.attr.data;
 
 public  class HomeScreen extends AppCompatActivity {
 
@@ -183,8 +186,8 @@ public  class HomeScreen extends AppCompatActivity {
                 countDownTimer.cancel();
                 start.setClickable(true);
                 stop.setClickable(false);
-                time.setText("03:00");
-                currentTime = "03:00";
+                time.setText("3:00");
+                currentTime = "3:00";
                 isCountingDown = false;
 
 
@@ -199,14 +202,10 @@ public  class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String oldTime = time.getText().toString();
-                int newMinutes = Integer.parseInt(oldTime.substring(1,oldTime.indexOf(':')))+1;
-                String newTime = "";
-                if(oldTime.charAt(0) == '0') {
-                    newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
-                }
-                else{
-                    newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
-                }
+
+                int newMinutes = Integer.parseInt(oldTime.substring(0,oldTime.indexOf(':')))+1;
+                String newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
+
                 //timer not active, simply update textview
                 if(!isCountingDown) {
                     time.setText(newTime);
@@ -228,15 +227,11 @@ public  class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String oldTime = time.getText().toString();
-                int newMinutes = Integer.parseInt(oldTime.substring(1, oldTime.indexOf(':')));
-                if (newMinutes > 0) {
+                int newMinutes = Integer.parseInt(oldTime.substring(0, oldTime.indexOf(':')));
+                if (newMinutes > 1) {
                     newMinutes--;
                     String newTime = "";
-                    if (oldTime.charAt(0) == '0') {
-                        newTime = "0" + String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
-                    } else {
-                        newTime =  String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
-                    }
+                    newTime =  String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
                     //timer not active, simply update textview
                     if(!isCountingDown) {
                         time.setText(newTime);
@@ -248,6 +243,9 @@ public  class HomeScreen extends AppCompatActivity {
                         createCountDownTimer();
                     }
 
+                }
+                else{
+                    Toast.makeText(HomeScreen.this, "Not enough time to remove more", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -307,7 +305,7 @@ public  class HomeScreen extends AppCompatActivity {
                 }
                 //update the TextView on every tick
                 else {
-                    String currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                    String currentTime = String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                     time.setText(currentTime);
                 }
 
