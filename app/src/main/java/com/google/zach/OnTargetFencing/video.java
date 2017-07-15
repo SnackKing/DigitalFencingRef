@@ -20,8 +20,11 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.widget.VideoView;
 import android.content.pm.PackageManager;
+
+import org.w3c.dom.Text;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +38,8 @@ public class video extends AppCompatActivity {
     String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     CountDownTimer countDownTimer;
 
-    String currentTimeForGlossary;
+    private TextView timer;
+    String currentTime;
     boolean isCountingDown;
 
     private TextView mTextMessage;
@@ -49,6 +53,8 @@ public class video extends AppCompatActivity {
                 case R.id.action_score:
                   //  mTextMessage.setText(R.string.title_home);
                     Intent homeIntent = new Intent(video.this,HomeScreen.class);
+                    homeIntent.putExtra("currentTime",currentTime);
+                    homeIntent.putExtra("isCountingDown",isCountingDown);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
                     return true;
@@ -58,7 +64,7 @@ public class video extends AppCompatActivity {
                 case R.id.action_stats:
                     //mTextMessage.setText(R.string.title_notifications);
                     Intent glossaryIntent = new Intent(video.this,glossary.class);
-                    glossaryIntent.putExtra("currentTime",currentTimeForGlossary);
+                    glossaryIntent.putExtra("currentTime",currentTime);
                     glossaryIntent.putExtra("isCountingDown",isCountingDown);
                     startActivityForResult(glossaryIntent,0);
                     return true;
@@ -76,12 +82,16 @@ public class video extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         String timeFromEarlierActivity = getIntent().getStringExtra("currentTime");
+        currentTime = timeFromEarlierActivity;
         boolean wasCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
         isCountingDown = wasCountingDown;
+
         videoView = (VideoView) findViewById(R.id.videoView);
-        Button stop = (Button) findViewById(R.id.stop);
+        final ToggleButton stop = (ToggleButton) findViewById(R.id.stop);
+        stop.setChecked(wasCountingDown);
         Button play = (Button) findViewById(R.id.play);
-        final TextView timer = (TextView) findViewById(R.id.time);
+         timer = (TextView) findViewById(R.id.time);
+
         //Leave the timer at the time from the last activity.
         timer.setText(timeFromEarlierActivity);
         /*
@@ -89,42 +99,33 @@ public class video extends AppCompatActivity {
         be created beginning at the time from the last CountDownTimer.
          */
         if(wasCountingDown) {
-            int minutes = Integer.parseInt(timeFromEarlierActivity.substring(0, timeFromEarlierActivity.indexOf(":")));
-            int seconds = Integer.parseInt(timeFromEarlierActivity.substring(timeFromEarlierActivity.indexOf(":") + 1));
-            long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
-            long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
-            long total = minutesToMilli + secondsToMilli;
-            countDownTimer = new CountDownTimer(total, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
-                    String currentTime = String.format("%2d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-                    timer.setText(currentTime);
-                    currentTimeForGlossary = currentTime;
-                }
+          createVideoTimer();
 
-                @Override
-                public void onFinish() {
-                    timer.setText("0:00");
-                    //Bring the home screen to the front
-                    Intent homeIntent = new Intent(video.this,HomeScreen.class);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivityIfNeeded(homeIntent, 0);
-                }
-            }.start();
-            //Cancel the timer that is in effect. Also cancels the timer that is in the home screen.
-            stop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("count",0);
-                    SharedPreferences.Editor edit= sharedPreferences.edit();
+        }
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!stop.isChecked()) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
                     edit.putBoolean("stop", true);
                     edit.apply();
                     countDownTimer.cancel();
-                    isCountingDown=false;
+                    isCountingDown = false;
                 }
-            });
-        }
+                else{
+                    SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.putBoolean("stop", false);
+                    edit.apply();
+                    createVideoTimer();
+                    isCountingDown = true;
+                }
+
+            }
+        });
 
 
 
@@ -235,6 +236,32 @@ public class video extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void createVideoTimer(){
+        int minutes = Integer.parseInt(currentTime.substring(0, currentTime.indexOf(":")));
+        int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
+        long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
+        long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
+        long total = minutesToMilli + secondsToMilli;
+        countDownTimer = new CountDownTimer(total, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                String newTime = String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                timer.setText(newTime);
+                currentTime = newTime;
+            }
+
+            @Override
+            public void onFinish() {
+                timer.setText("0:00");
+                //Bring the home screen to the front
+                Intent homeIntent = new Intent(video.this,HomeScreen.class);
+                homeIntent.putExtra("finished",true);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(homeIntent, 0);
+            }
+        }.start();
     }
 
 

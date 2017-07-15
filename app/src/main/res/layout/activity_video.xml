@@ -52,15 +52,18 @@
         android:layout_alignTop="@+id/play"
         android:layout_toRightOf="@id/play"/>
 
-    <Button
+    <ToggleButton
         android:id="@+id/stop"
-        android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:text="Stop Timer"
+        android:layout_alignBottom="@+id/play"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/play"
-        android:layout_alignBottom="@+id/play" />
+        android:layout_marginLeft="5dp"
+        android:background="@android:color/darker_gray"
+        android:checked="false"
+        android:textOn="Stop Time"
+        android:textOff="Start Time"
+       />
 
 </RelativeLayout>

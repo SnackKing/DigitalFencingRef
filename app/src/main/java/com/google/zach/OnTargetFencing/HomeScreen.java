@@ -56,6 +56,8 @@ public  class HomeScreen extends AppCompatActivity {
      */
     SharedPreferences sharedPreferences;
 
+    private boolean hasBooted;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public  class HomeScreen extends AppCompatActivity {
                         return true;
                     case R.id.action_video:
                       //  mTextMessage.setText(R.string.title_camera);
+                        hasBooted = true;
                         Intent intent = new Intent(HomeScreen.this, video.class);
                         intent.putExtra("currentTime",currentTime);
                         intent.putExtra("isCountingDown",isCountingDown);
@@ -103,6 +106,7 @@ public  class HomeScreen extends AppCompatActivity {
                         return true;
                     case R.id.action_stats:
                        // mTextMessage.setText(R.string.title_stats);
+                        hasBooted = true;
                         Intent glossaryIntent = new Intent(HomeScreen.this,glossary.class);
                         glossaryIntent.putExtra("currentTime",currentTime);
                         glossaryIntent.putExtra("isCountingDown",isCountingDown);
@@ -209,6 +213,7 @@ public  class HomeScreen extends AppCompatActivity {
                 //timer not active, simply update textview
                 if(!isCountingDown) {
                     time.setText(newTime);
+                    currentTime = newTime;
                 }
                 //timer active, cancel timer and create new one
                 else {
@@ -235,6 +240,7 @@ public  class HomeScreen extends AppCompatActivity {
                     //timer not active, simply update textview
                     if(!isCountingDown) {
                         time.setText(newTime);
+                        currentTime = newTime;
                     }
                     //timer active, cancel timer and create new one
                     else {
@@ -320,6 +326,48 @@ public  class HomeScreen extends AppCompatActivity {
             }
         }.start();
 
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent != null)
+            setIntent(intent);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+
+
+        if(hasBooted) {
+
+            Intent intent = getIntent();
+            String timeFromEarlierActivity = "";
+            Boolean wasCountingDown = false;
+            Bundle extras = intent.getExtras();
+            boolean finished = false;
+            if(extras !=null) {
+                 timeFromEarlierActivity = extras.getString("currentTime");
+                wasCountingDown = extras.getBoolean("isCountingDown");
+                finished = extras.getBoolean("finished");
+            }
+            if(finished){
+                time.setText("0:00");
+                start.setClickable(true);
+                stop.setClickable(false);
+                currentTime = "0:00";
+            }
+            else {
+
+
+                if (wasCountingDown && !isCountingDown) {
+                    currentTime = timeFromEarlierActivity;
+                    time.setText(currentTime);
+                    createCountDownTimer();
+                    start.setClickable(false);
+                    stop.setClickable(true);
+                    isCountingDown = true;
+                }
+            }
+        }
     }
 
 

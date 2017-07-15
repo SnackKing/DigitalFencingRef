@@ -41,6 +41,8 @@ public class glossary extends AppCompatActivity {
                 case R.id.action_score:
 //                    mTextMessage.setText(R.string.title_home);
                     Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+                    homeIntent.putExtra("currentTime",currentTime);
+                    homeIntent.putExtra("isCountingDown",isCountingDown);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
 
@@ -93,13 +95,15 @@ public class glossary extends AppCompatActivity {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
-                    currentTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                    currentTime = String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                 }
 
                 @Override
                 public void onFinish() {
                     //Bring the home screen to the front
                     Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    homeIntent.putExtra("finished",true);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivityIfNeeded(homeIntent, 0);
                 }
