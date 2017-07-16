@@ -61,7 +61,7 @@ public class video extends AppCompatActivity {
                 case R.id.action_video:
                     //mTextMessage.setText(R.string.title_dashboard);
                     return true;
-                case R.id.action_stats:
+                case R.id.action_glossary:
                     //mTextMessage.setText(R.string.title_notifications);
                     Intent glossaryIntent = new Intent(video.this,glossary.class);
                     glossaryIntent.putExtra("currentTime",currentTime);
@@ -106,7 +106,7 @@ public class video extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Stops the timer
                 if(!stop.isChecked()) {
                     SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
                     SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -115,6 +115,7 @@ public class video extends AppCompatActivity {
                     countDownTimer.cancel();
                     isCountingDown = false;
                 }
+                //creates a new timer
                 else{
                     SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
                     SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -237,6 +238,9 @@ public class video extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    //Creates a new CountDownTimer beginning at whatever time was left in the TextView
+
     public void createVideoTimer(){
         int minutes = Integer.parseInt(currentTime.substring(0, currentTime.indexOf(":")));
         int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));

@@ -2,7 +2,7 @@
     <string name="app_name">On Target Fencing</string>
     <string name="title_score">Scoring</string>
     <string name="title_camera">Video</string>
-    <string name="title_stats">Glossary</string>
+    <string name="title_glossary">Glossary</string>
     <string name="title_activity_main1">MainActivity1</string>
     <string name="title_activity_video">video</string>
     <string name="title_home">Home</string>

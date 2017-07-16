@@ -104,7 +104,7 @@ public  class HomeScreen extends AppCompatActivity {
                         startActivityForResult(intent,0);
 
                         return true;
-                    case R.id.action_stats:
+                    case R.id.action_glossary:
                        // mTextMessage.setText(R.string.title_stats);
                         hasBooted = true;
                         Intent glossaryIntent = new Intent(HomeScreen.this,glossary.class);
@@ -336,9 +336,9 @@ public  class HomeScreen extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
-
+        //Don't do anything when the application initially launches
         if(hasBooted) {
-
+            //get intent variables
             Intent intent = getIntent();
             String timeFromEarlierActivity = "";
             Boolean wasCountingDown = false;
@@ -349,15 +349,22 @@ public  class HomeScreen extends AppCompatActivity {
                 wasCountingDown = extras.getBoolean("isCountingDown");
                 finished = extras.getBoolean("finished");
             }
+            /*
+             *if the timer has expired in another activity while the timer in the main activity
+             * is not running, then manually set the time to 0.
+             */
             if(finished){
                 time.setText("0:00");
                 start.setClickable(true);
                 stop.setClickable(false);
                 currentTime = "0:00";
             }
+
             else {
-
-
+                /*
+                 * If the timer was resumed in video mode and the timer was not running in the
+                 * scoring activity, then a new timer must be created upon launching this activity.
+                 */
                 if (wasCountingDown && !isCountingDown) {
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);

@@ -51,17 +51,18 @@ public class faq extends AppCompatActivity {
 
         textview.append(getString(R.string.a3));
 
-        ss = new SpannableString(getString(R.string.q4));
-        ss.setSpan(new StyleSpan(Typeface.BOLD), 0, ss.length(), 0);
-        textview.append(ss);
-
-        textview.append(getString(R.string.a4));
 
         ss = new SpannableString(getString(R.string.q5));
         ss.setSpan(new StyleSpan(Typeface.BOLD), 0, ss.length(), 0);
         textview.append(ss);
 
         textview.append(getString(R.string.a5));
+
+        ss = new SpannableString(getString(R.string.q6));
+        ss.setSpan(new StyleSpan(Typeface.BOLD), 0, ss.length(), 0);
+        textview.append(ss);
+
+        textview.append(getString(R.string.a6));
 
     }
     @Override

@@ -31,7 +31,14 @@
         <string name = "a5"> \n Although I am part of a fencing club at Ohio State, this application
         was made independently of any club or organization. The design and name are not intentonally
         derived from any existing club or organization, and any similarities are coincidential and
-        are not intended.</string>
+        are not intended. \n \n</string>
+
+        <string name = "q6">Will there ever be any updates or changes to this app? \n</string>
+
+        <string name = "a6">\n While I cannot say for sure, I will definitely try to update the app in
+         the future. However, this depends on how much user feedback I get. I will focus on fixing
+        any reported bugs that might arise before I add any new content. If I get a lot of feedback
+        that suggests a particular feature, then I will work on implementing it in a future update. \n \n</string>
 
 
 </resources>

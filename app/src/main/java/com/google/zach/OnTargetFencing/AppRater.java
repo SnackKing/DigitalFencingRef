@@ -57,7 +57,11 @@ public class AppRater {
         ll.setOrientation(LinearLayout.VERTICAL);
 
         TextView tv = new TextView(mContext);
-        tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. Thanks for your support!");
+        tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. \n" +
+                " As a student developer, " +
+                "it would be very beneficial to me if you could give me feedback about this app on the google play store. " +
+                "In order to make your experience as positive as possible, " +
+                "I have made the application free to download and I have opted to not include any advertisements. ");
         tv.setWidth(240);
         tv.setPadding(4, 0, 4, 10);
         ll.addView(tv);
@@ -67,6 +71,7 @@ public class AppRater {
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                editor.putBoolean("dontshowagain", true);
                 dialog.dismiss();
             }
         });

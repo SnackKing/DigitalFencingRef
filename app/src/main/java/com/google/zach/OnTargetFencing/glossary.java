@@ -59,7 +59,7 @@ public class glossary extends AppCompatActivity {
                     startActivityForResult(videoIntent,0);
 
                     return true;
-                case R.id.action_stats:
+                case R.id.action_glossary:
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
