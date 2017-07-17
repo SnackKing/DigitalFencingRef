@@ -29,6 +29,8 @@ public class glossary extends AppCompatActivity {
     ExpandableListView expListView;
     private String currentTime;
     private boolean isCountingDown;
+    CountDownTimer countDownTimer;
+
 
     private TextView mTextMessage;
 
@@ -43,20 +45,29 @@ public class glossary extends AppCompatActivity {
                     Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
                     homeIntent.putExtra("currentTime",currentTime);
                     homeIntent.putExtra("isCountingDown",isCountingDown);
+                    //prevent extra timers from running
+                    if(isCountingDown) {
+                        countDownTimer.cancel();
+                    }
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivityIfNeeded(homeIntent, 0);
+//                    startActivityIfNeeded(homeIntent, 0);
+                    startActivityForResult(homeIntent,2);
 
 
                     return true;
                 case R.id.action_video:
-                   ;
+
 //                    mTextMessage.setText(R.string.title_dashboard);
                     Intent videoIntent = new Intent(glossary.this, video.class);
                     String cur = currentTime;
                     boolean con = isCountingDown;
                     videoIntent.putExtra("currentTime",currentTime);
                     videoIntent.putExtra("isCountingDown",isCountingDown);
-                    startActivityForResult(videoIntent,0);
+                    //prevent extra timers from running
+                    if(isCountingDown) {
+                        countDownTimer.cancel();
+                    }
+                    startActivityForResult(videoIntent,2);
 
                     return true;
                 case R.id.action_glossary:
@@ -86,29 +97,7 @@ public class glossary extends AppCompatActivity {
         so there is no gap in time when switching.
          */
         if(wasCountingDown) {
-            int minutes = Integer.parseInt(timeFromEarlierActivity.substring(0, timeFromEarlierActivity.indexOf(":")));
-            int seconds = Integer.parseInt(timeFromEarlierActivity.substring(timeFromEarlierActivity.indexOf(":") + 1));
-            long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
-            long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
-            long total = minutesToMilli + secondsToMilli;
-            CountDownTimer countDownTimer  = new CountDownTimer(total, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
-                    currentTime = String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-                }
-
-                @Override
-                public void onFinish() {
-                    //Bring the home screen to the front
-                    Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    homeIntent.putExtra("finished",true);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivityIfNeeded(homeIntent, 0);
-                }
-            }.start();
-
+          createGlossaryTimer();
         }
         //get arrays of terms and their definitions
         groupList = getResources().getStringArray(R.array.terms);
@@ -186,5 +175,60 @@ public class glossary extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    //Implemented for when the back button is used in video mode.
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if(resultCode == RESULT_OK) {
+                String timeFromEarlierActivity = data.getStringExtra("currentTime");
+                Boolean wasCountingDown = data.getBooleanExtra("isCountingDown",false);
+                if(wasCountingDown){
+                    currentTime = timeFromEarlierActivity;
+                    createGlossaryTimer();
+                    isCountingDown = true;
+                }
+
+            }
+        }
+    }
+    public void createGlossaryTimer(){
+        int minutes = Integer.parseInt(currentTime.substring(0, currentTime.indexOf(":")));
+        int seconds = Integer.parseInt(currentTime.substring(currentTime.indexOf(":") + 1));
+        long minutesToMilli = TimeUnit.MINUTES.toMillis(minutes);
+        long secondsToMilli = TimeUnit.SECONDS.toMillis(seconds);
+        long total = minutesToMilli + secondsToMilli;
+        countDownTimer = new CountDownTimer(total, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                SharedPreferences sharedPreferences = getSharedPreferences("count", 0);
+                String newTime = String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                currentTime = newTime;
+            }
+
+            @Override
+            public void onFinish() {
+                //Bring the home screen to the front
+                Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+                homeIntent.putExtra("finished",true);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(homeIntent, 0);
+            }
+        }.start();
+    }
+    /*
+        if back is used, then data must be passed to the glossary or scoring mode to prevent the
+        scoring activity timer from missing data.
+     */
+    @Override
+    public void onBackPressed()
+    {
+        //put extra value in intent
+        Intent intent = new Intent();
+        intent.putExtra("currentTime",currentTime);
+        intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        super.onBackPressed();
+    }
+
+
 
 }

@@ -55,8 +55,14 @@ public class video extends AppCompatActivity {
                     Intent homeIntent = new Intent(video.this,HomeScreen.class);
                     homeIntent.putExtra("currentTime",currentTime);
                     homeIntent.putExtra("isCountingDown",isCountingDown);
+                    //prevent extra timers from running
+                    if(isCountingDown) {
+                        countDownTimer.cancel();
+                    }
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivityIfNeeded(homeIntent, 0);
+//                    startActivityIfNeeded(homeIntent, 0);
+                    startActivityForResult(homeIntent,2);
+
                     return true;
                 case R.id.action_video:
                     //mTextMessage.setText(R.string.title_dashboard);
@@ -66,7 +72,11 @@ public class video extends AppCompatActivity {
                     Intent glossaryIntent = new Intent(video.this,glossary.class);
                     glossaryIntent.putExtra("currentTime",currentTime);
                     glossaryIntent.putExtra("isCountingDown",isCountingDown);
-                    startActivityForResult(glossaryIntent,0);
+                    //prevent extra timers from running
+                    if(isCountingDown) {
+                        countDownTimer.cancel();
+                    }
+                    startActivityForResult(glossaryIntent,2);
                     return true;
             }
             return false;
@@ -210,6 +220,16 @@ public class video extends AppCompatActivity {
             videoView.requestFocus();
             videoView.start();
         }
+        else if(requestCode == 2 && resultCode == RESULT_OK){
+            String timeFromEarlierActivity = data.getStringExtra("currentTime");
+            Boolean wasCountingDown = data.getBooleanExtra("isCountingDown",false);
+            if(wasCountingDown){
+                currentTime = timeFromEarlierActivity;
+                createVideoTimer();
+                isCountingDown = true;
+            }
+
+        }
     }
 
 //    public void playbackRecordedVideo() {
@@ -267,6 +287,22 @@ public class video extends AppCompatActivity {
             }
         }.start();
     }
+
+    /*
+        if back is used, then data must be passed to the glossary or scoring mode to prevent the
+        scoring activity timer from missing data.
+     */
+    @Override
+    public void onBackPressed()
+    {
+        //put extra value in intent
+        Intent intent = new Intent();
+        intent.putExtra("currentTime",currentTime);
+        intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        super.onBackPressed();
+    }
+
+
 
 
 }

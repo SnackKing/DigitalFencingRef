@@ -101,7 +101,7 @@ public  class HomeScreen extends AppCompatActivity {
                         Intent intent = new Intent(HomeScreen.this, video.class);
                         intent.putExtra("currentTime",currentTime);
                         intent.putExtra("isCountingDown",isCountingDown);
-                        startActivityForResult(intent,0);
+                        startActivityForResult(intent,2);
 
                         return true;
                     case R.id.action_glossary:
@@ -110,7 +110,7 @@ public  class HomeScreen extends AppCompatActivity {
                         Intent glossaryIntent = new Intent(HomeScreen.this,glossary.class);
                         glossaryIntent.putExtra("currentTime",currentTime);
                         glossaryIntent.putExtra("isCountingDown",isCountingDown);
-                        startActivityForResult(glossaryIntent,0);
+                        startActivityForResult(glossaryIntent,2);
                         return true;
                 }
                 return false;
@@ -375,6 +375,38 @@ public  class HomeScreen extends AppCompatActivity {
                 }
             }
         }
+    }
+    //Implemented for when the back button is used in video mode.
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if(resultCode == RESULT_OK) {
+                String timeFromEarlierActivity = data.getStringExtra("currentTime");
+                Boolean wasCountingDown = data.getBooleanExtra("isCountingDown",false);
+                if(wasCountingDown){
+                    currentTime = timeFromEarlierActivity;
+                    time.setText(currentTime);
+                    createCountDownTimer();
+                    start.setClickable(false);
+                    stop.setClickable(true);
+                    isCountingDown = true;
+                }
+
+            }
+        }
+    }
+    /*
+        if back is used, then data must be passed to the glossary or scoring mode to prevent the
+        scoring activity timer from missing data.
+     */
+    @Override
+    public void onBackPressed()
+    {
+        //put extra value in intent
+        Intent intent = new Intent();
+        intent.putExtra("currentTime",currentTime);
+        intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 
 
