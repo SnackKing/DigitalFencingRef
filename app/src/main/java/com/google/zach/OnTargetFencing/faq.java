@@ -64,6 +64,14 @@ public class faq extends AppCompatActivity {
 
         textview.append(getString(R.string.a6));
 
+        ss = new SpannableString((getString(R.string.q7)));
+        ss.setSpan(new StyleSpan(Typeface.BOLD),0,ss.length(),0);
+        textview.append(ss);
+
+        textview.append(getString(R.string.a7));
+
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

@@ -40,5 +40,12 @@
         any reported bugs that might arise before I add any new content. If I get a lot of feedback
         that suggests a particular feature, then I will work on implementing it in a future update. \n \n</string>
 
+    <string name = "q7">How do I know when the timer runs out when I am taking a video? \n</string>
+
+    <string name = "a7">\n The app will notify you by vibrating for exactly 3 seconds. I chose
+        3 seconds because that is longer than the typical amount of time that android phones vibrate
+        when receiving a text.Please ensure that your phones vibration is turned on to
+        ensure that you are notified properly. \n \n</string>
+
 
 </resources>

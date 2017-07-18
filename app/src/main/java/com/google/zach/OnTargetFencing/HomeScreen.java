@@ -1,10 +1,12 @@
 package com.google.zach.OnTargetFencing;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -358,6 +360,9 @@ public  class HomeScreen extends AppCompatActivity {
                 start.setClickable(true);
                 stop.setClickable(false);
                 currentTime = "0:00";
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(3000);
+
             }
 
             else {

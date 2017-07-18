@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -279,11 +280,9 @@ public class video extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timer.setText("0:00");
-                //Bring the home screen to the front
-                Intent homeIntent = new Intent(video.this,HomeScreen.class);
-                homeIntent.putExtra("finished",true);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivityIfNeeded(homeIntent, 0);
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(3000);
+
             }
         }.start();
     }

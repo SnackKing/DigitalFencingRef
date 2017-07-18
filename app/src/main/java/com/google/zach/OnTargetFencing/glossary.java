@@ -1,9 +1,11 @@
 package com.google.zach.OnTargetFencing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -208,10 +210,13 @@ public class glossary extends AppCompatActivity {
             @Override
             public void onFinish() {
                 //Bring the home screen to the front
-                Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
-                homeIntent.putExtra("finished",true);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivityIfNeeded(homeIntent, 0);
+//                Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
+//                homeIntent.putExtra("finished",true);
+//                homeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                startActivityIfNeeded(homeIntent, 0);
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(3000);
+
             }
         }.start();
     }
