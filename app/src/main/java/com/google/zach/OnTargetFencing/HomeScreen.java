@@ -376,14 +376,15 @@ public  class HomeScreen extends AppCompatActivity {
             }
         }
     }
-    //Implemented for when the back button is used in video mode.
+    //Implemented for when the back button is used in video or glossary mode.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
             if(resultCode == RESULT_OK) {
                 String timeFromEarlierActivity = data.getStringExtra("currentTime");
                 Boolean wasCountingDown = data.getBooleanExtra("isCountingDown",false);
-                if(wasCountingDown){
+                //create new timer if it was stopped in the scoring activity and running in the previous activity
+                if(wasCountingDown && !isCountingDown){
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);
                     createCountDownTimer();
@@ -406,6 +407,7 @@ public  class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("currentTime",currentTime);
         intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        //execute standard back button function
         super.onBackPressed();
     }
 

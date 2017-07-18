@@ -225,7 +225,13 @@ public class glossary extends AppCompatActivity {
         //put extra value in intent
         Intent intent = new Intent();
         intent.putExtra("currentTime",currentTime);
-        intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        intent.putExtra("isCountingDown",isCountingDown);
+        setResult(RESULT_OK, intent);
+        //prevent additional timers from running
+        if(isCountingDown){
+            countDownTimer.cancel();
+        }
+        //execute standard back button function
         super.onBackPressed();
     }
 
