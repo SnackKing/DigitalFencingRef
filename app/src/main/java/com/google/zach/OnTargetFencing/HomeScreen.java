@@ -58,7 +58,7 @@ public  class HomeScreen extends AppCompatActivity {
      */
     SharedPreferences sharedPreferences;
 
-    private boolean hasBooted;
+    private static boolean hasBooted;
 
 
     @Override
@@ -377,6 +377,17 @@ public  class HomeScreen extends AppCompatActivity {
                     start.setClickable(false);
                     stop.setClickable(true);
                     isCountingDown = true;
+                }
+                /*
+                 *  If the timer was paused in video mode but not running in scoring mode, just
+                 *  change remaining time.
+                 */
+                else if(!wasCountingDown && !isCountingDown){
+                    currentTime = timeFromEarlierActivity;
+                    time.setText(currentTime);
+                    start.setClickable(true);
+                    stop.setClickable(false);
+                    isCountingDown = false;
                 }
             }
         }
