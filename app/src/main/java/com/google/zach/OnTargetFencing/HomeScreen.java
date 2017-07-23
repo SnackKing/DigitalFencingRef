@@ -370,7 +370,7 @@ public  class HomeScreen extends AppCompatActivity {
                  * If the timer was resumed in video mode and the timer was not running in the
                  * scoring activity, then a new timer must be created upon launching this activity.
                  */
-                if (wasCountingDown && !isCountingDown) {
+                if (wasCountingDown && !isCountingDown && extras != null) {
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);
                     createCountDownTimer();
@@ -382,7 +382,7 @@ public  class HomeScreen extends AppCompatActivity {
                  *  If the timer was paused in video mode but not running in scoring mode, just
                  *  change remaining time.
                  */
-                else if(!wasCountingDown && !isCountingDown){
+                else if(!wasCountingDown && !isCountingDown && extras != null){
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);
                     start.setClickable(true);
@@ -407,6 +407,13 @@ public  class HomeScreen extends AppCompatActivity {
                     start.setClickable(false);
                     stop.setClickable(true);
                     isCountingDown = true;
+                }
+                else if(!wasCountingDown && !isCountingDown){
+                    currentTime = timeFromEarlierActivity;
+                    time.setText(currentTime);
+                    start.setClickable(true);
+                    stop.setClickable(false);
+                    isCountingDown = false;
                 }
 
             }

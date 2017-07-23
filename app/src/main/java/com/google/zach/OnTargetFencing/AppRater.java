@@ -1,10 +1,14 @@
 package com.google.zach.OnTargetFencing;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -50,20 +54,21 @@ public class AppRater {
     }
 
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
-        final Dialog dialog = new Dialog(mContext);
+        final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
         dialog.setTitle("Rate " + APP_TITLE);
-
+//        dialog.setMessage("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. \n" +
+//                " As a student developer, " +
+//                "it would be very beneficial to me if you could give me feedback about this app on the google play store.");
         LinearLayout ll = new LinearLayout(mContext);
         ll.setOrientation(LinearLayout.VERTICAL);
 
         TextView tv = new TextView(mContext);
         tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. \n" +
-                " As a student developer, " +
-                "it would be very beneficial to me if you could give me feedback about this app on the google play store. " +
-                "In order to make your experience as positive as possible, " +
-                "I have made the application free to download and I have opted to not include any advertisements. ");
-        tv.setWidth(240);
-        tv.setPadding(4, 0, 4, 10);
+                "As a student developer, " +
+                "it would be very beneficial to me if you could give me feedback about this app on the google play store.");
+        tv.setWidth(480);
+        tv.setPadding(10, 0, 10, 10);
+        tv.setTextColor(Color.BLACK);
         ll.addView(tv);
 
         Button b1 = new Button(mContext);
@@ -99,7 +104,7 @@ public class AppRater {
         });
         ll.addView(b3);
 
-        dialog.setContentView(ll);
+        dialog.setView(ll);
         dialog.show();
     }
 }
