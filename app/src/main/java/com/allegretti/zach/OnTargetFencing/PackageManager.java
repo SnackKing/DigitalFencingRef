@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 /**
  * Created by Zach on 5/21/2017.

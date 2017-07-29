@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 import android.Manifest;
 import android.content.Context;
@@ -25,8 +25,6 @@ import android.widget.ToggleButton;
 import android.widget.VideoView;
 import android.content.pm.PackageManager;
 
-import org.w3c.dom.Text;
-
 import java.util.concurrent.TimeUnit;
 
 public class video extends AppCompatActivity {
@@ -42,15 +40,21 @@ public class video extends AppCompatActivity {
     private TextView timer;
     String currentTime;
     boolean isCountingDown;
-
+    BottomNavigationView bottomNav;
     private TextView mTextMessage;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video);
+
+
+       final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
                 case R.id.action_score:
                   //  mTextMessage.setText(R.string.title_home);
                     Intent homeIntent = new Intent(video.this,HomeScreen.class);
@@ -83,14 +87,11 @@ public class video extends AppCompatActivity {
             return false;
         }
 
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        });
+        bottomNav = navigation;
+        navigation.getMenu().findItem(R.id.action_score).setChecked(false);
+        navigation.getMenu().findItem(R.id.action_glossary).setChecked(false);
+        navigation.getMenu().findItem(R.id.action_video).setChecked(true);
 
         String timeFromEarlierActivity = getIntent().getStringExtra("currentTime");
         currentTime = timeFromEarlierActivity;
@@ -143,7 +144,7 @@ public class video extends AppCompatActivity {
 
 
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +230,10 @@ public class video extends AppCompatActivity {
                 createVideoTimer();
                 isCountingDown = true;
             }
+            else{
+                currentTime = timeFromEarlierActivity;
+                isCountingDown = false;
+            }
 
         }
     }
@@ -305,6 +310,14 @@ public class video extends AppCompatActivity {
         }
         //execute standard back button function
         super.onBackPressed();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        bottomNav.getMenu().findItem(R.id.action_score).setChecked(false);
+        bottomNav.getMenu().findItem(R.id.action_glossary).setChecked(false);
+        bottomNav.getMenu().findItem(R.id.action_video).setChecked(true);
+
     }
 
 

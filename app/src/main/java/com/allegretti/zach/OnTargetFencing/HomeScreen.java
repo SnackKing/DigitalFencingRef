@@ -1,9 +1,7 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -13,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,8 +19,6 @@ import android.widget.Toast;
 
 
 import java.util.concurrent.TimeUnit;
-
-import static android.R.attr.data;
 
 public  class HomeScreen extends AppCompatActivity {
 
@@ -60,13 +54,17 @@ public  class HomeScreen extends AppCompatActivity {
 
     private static boolean hasBooted;
 
+    boolean bundleUsed;
+
+BottomNavigationView bottomNav;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         AppRater.app_launched(this);
-
+        bundleUsed = false;
         isCountingDown = false;
         sharedPreferences = this.getSharedPreferences("count", 0);
         //Initialize all components
@@ -89,7 +87,7 @@ public  class HomeScreen extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+       final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -99,7 +97,10 @@ public  class HomeScreen extends AppCompatActivity {
                         return true;
                     case R.id.action_video:
                       //  mTextMessage.setText(R.string.title_camera);
+//                        bottomNavigationView.getMenu().getItem(R.id.action_video).setChecked(true);
+//                        bottomNavigationView.getMenu().getItem(R.id.action_score).setChecked(false);
                         hasBooted = true;
+                        bundleUsed = false;
                         Intent intent = new Intent(HomeScreen.this, video.class);
                         intent.putExtra("currentTime",currentTime);
                         intent.putExtra("isCountingDown",isCountingDown);
@@ -109,6 +110,7 @@ public  class HomeScreen extends AppCompatActivity {
                     case R.id.action_glossary:
                        // mTextMessage.setText(R.string.title_stats);
                         hasBooted = true;
+                        bundleUsed = false;
                         Intent glossaryIntent = new Intent(HomeScreen.this,glossary.class);
                         glossaryIntent.putExtra("currentTime",currentTime);
                         glossaryIntent.putExtra("isCountingDown",isCountingDown);
@@ -118,6 +120,7 @@ public  class HomeScreen extends AppCompatActivity {
                 return false;
             }
         });
+        bottomNav = bottomNavigationView;
         //Increases the score for the fencer on the left
         redPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,10 +180,12 @@ public  class HomeScreen extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start.setClickable(true);
-                stop.setClickable(false);
-                countDownTimer.cancel();
-                isCountingDown = false;
+                if(countDownTimer != null) {
+                    start.setClickable(true);
+                    stop.setClickable(false);
+                    countDownTimer.cancel();
+                    isCountingDown = false;
+                }
             }
         });
         /*
@@ -189,12 +194,20 @@ public  class HomeScreen extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countDownTimer.cancel();
-                start.setClickable(true);
-                stop.setClickable(false);
-                time.setText("3:00");
-                currentTime = "3:00";
-                isCountingDown = false;
+                if(countDownTimer != null) {
+                    countDownTimer.cancel();
+                    start.setClickable(true);
+                    stop.setClickable(false);
+                    if(!isCountingDown && currentTime.equals("3:00")){
+                        time.setText("1:00");
+                        currentTime = "1:00";
+                    }
+                    else {
+                        time.setText("3:00");
+                        currentTime = "3:00";
+                    }
+                    isCountingDown = false;
+                }
 
 
             }
@@ -211,9 +224,9 @@ public  class HomeScreen extends AppCompatActivity {
 
                 int newMinutes = Integer.parseInt(oldTime.substring(0,oldTime.indexOf(':')))+1;
                 String newTime = String.valueOf(newMinutes) + oldTime.substring(oldTime.indexOf(':'));
-
+            if(Integer.parseInt(oldTime.substring(0,oldTime.indexOf(':'))) < 30) {
                 //timer not active, simply update textview
-                if(!isCountingDown) {
+                if (!isCountingDown) {
                     time.setText(newTime);
                     currentTime = newTime;
                 }
@@ -223,6 +236,10 @@ public  class HomeScreen extends AppCompatActivity {
                     time.setText(newTime);
                     createCountDownTimer();
                 }
+            }
+            else{
+                Toast.makeText(HomeScreen.this, "Can't add more time", Toast.LENGTH_SHORT).show();
+            }
             }
         });
          /*
@@ -338,11 +355,16 @@ public  class HomeScreen extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
+
         //Don't do anything when the application initially launches
         if(hasBooted) {
+            bottomNav.getMenu().findItem(R.id.action_video).setChecked(false);
+            bottomNav.getMenu().findItem(R.id.action_glossary).setChecked(false);
+            bottomNav.getMenu().findItem(R.id.action_score).setChecked(true);
+
             //get intent variables
             Intent intent = getIntent();
-            String timeFromEarlierActivity = "";
+            String timeFromEarlierActivity = null;
             Boolean wasCountingDown = false;
             Bundle extras = intent.getExtras();
             boolean finished = false;
@@ -355,41 +377,47 @@ public  class HomeScreen extends AppCompatActivity {
              *if the timer has expired in another activity while the timer in the main activity
              * is not running, then manually set the time to 0.
              */
-            if(finished){
+            if(finished && !bundleUsed){
                 time.setText("0:00");
                 start.setClickable(true);
                 stop.setClickable(false);
                 currentTime = "0:00";
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(3000);
+                bundleUsed = true;
 
             }
 
-            else {
+            else if (timeFromEarlierActivity != null && !bundleUsed) {
                 /*
                  * If the timer was resumed in video mode and the timer was not running in the
                  * scoring activity, then a new timer must be created upon launching this activity.
                  */
-                if (wasCountingDown && !isCountingDown && extras != null) {
+                if (wasCountingDown && !isCountingDown) {
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);
                     createCountDownTimer();
                     start.setClickable(false);
                     stop.setClickable(true);
                     isCountingDown = true;
+                    bundleUsed = true;
                 }
                 /*
                  *  If the timer was paused in video mode but not running in scoring mode, just
                  *  change remaining time.
                  */
-                else if(!wasCountingDown && !isCountingDown && extras != null){
+                else if(!wasCountingDown && !isCountingDown){
                     currentTime = timeFromEarlierActivity;
                     time.setText(currentTime);
                     start.setClickable(true);
                     stop.setClickable(false);
                     isCountingDown = false;
+                    bundleUsed = true;
+
                 }
             }
+            bundleUsed = true;
+
         }
     }
     //Implemented for when the back button is used in video or glossary mode.
@@ -397,6 +425,7 @@ public  class HomeScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
             if(resultCode == RESULT_OK) {
+                bundleUsed = true;
                 String timeFromEarlierActivity = data.getStringExtra("currentTime");
                 Boolean wasCountingDown = data.getBooleanExtra("isCountingDown",false);
                 //create new timer if it was stopped in the scoring activity and running in the previous activity
@@ -427,12 +456,15 @@ public  class HomeScreen extends AppCompatActivity {
     public void onBackPressed()
     {
         //put extra value in intent
+        bundleUsed = false;
         Intent intent = new Intent();
         intent.putExtra("currentTime",currentTime);
-        intent.putExtra("isCountingDown",isCountingDown);        setResult(RESULT_OK, intent);
+        intent.putExtra("isCountingDown",isCountingDown);
+        setResult(RESULT_OK, intent);
         //execute standard back button function
         super.onBackPressed();
     }
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 import java.util.List;
 import java.util.Map;
 import android.app.Activity;

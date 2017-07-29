@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,16 +32,22 @@ public class glossary extends AppCompatActivity {
     private String currentTime;
     private boolean isCountingDown;
     CountDownTimer countDownTimer;
+    BottomNavigationView bottomNav;
+
 
 
     private TextView mTextMessage;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_glossary);
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
                 case R.id.action_score:
 //                    mTextMessage.setText(R.string.title_home);
                     Intent homeIntent = new Intent(glossary.this,HomeScreen.class);
@@ -76,18 +82,16 @@ public class glossary extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
-            return false;
-        }
 
-    };
+                return false;
+            }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_glossary);
+        });
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNav = navigation;
+        navigation.getMenu().findItem(R.id.action_score).setChecked(false);
+        navigation.getMenu().findItem(R.id.action_video).setChecked(false);
+        navigation.getMenu().findItem(R.id.action_glossary).setChecked(true);
 
         String timeFromEarlierActivity = getIntent().getStringExtra("currentTime");
         boolean wasCountingDown = getIntent().getBooleanExtra("isCountingDown",false);
@@ -189,6 +193,10 @@ public class glossary extends AppCompatActivity {
                     createGlossaryTimer();
                     isCountingDown = true;
                 }
+                else{
+                    currentTime = timeFromEarlierActivity;
+                    isCountingDown = false;
+                }
 
             }
         }
@@ -239,7 +247,15 @@ public class glossary extends AppCompatActivity {
         //execute standard back button function
         super.onBackPressed();
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        bottomNav.getMenu().findItem(R.id.action_score).setChecked(false);
+        bottomNav.getMenu().findItem(R.id.action_video).setChecked(false);
+        bottomNav.getMenu().findItem(R.id.action_glossary).setChecked(true);
 
+
+    }
 
 
 }

@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

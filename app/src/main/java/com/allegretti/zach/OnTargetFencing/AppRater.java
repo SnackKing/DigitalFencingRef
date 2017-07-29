@@ -1,4 +1,4 @@
-package com.google.zach.OnTargetFencing;
+package com.allegretti.zach.OnTargetFencing;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -20,7 +20,7 @@ import android.widget.TextView;
  */
 public class AppRater {
     private final static String APP_TITLE = "On Target Fencing";// App Name
-    private final static String APP_PNAME = "com.google.zach";// Package Name
+    private final static String APP_PNAME = "com.allegretti.zach.OnTargetFencing";// Package Name
 
     private final static int DAYS_UNTIL_PROMPT = 3;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
@@ -75,7 +75,7 @@ public class AppRater {
         b1.setText("Rate " + APP_TITLE);
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mContext.getPackageName())));
                 editor.putBoolean("dontshowagain", true);
                 dialog.dismiss();
             }

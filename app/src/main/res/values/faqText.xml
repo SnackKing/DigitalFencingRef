@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name = "heading"> Frequently Asked Questions \n \n </string>
-    <string name = "q1">How does this timer work? Is the same timer used on every screen? \n</string>
+    <string name = "q1"> How does this timer work? Is the same timer used on every screen? \n</string>
     <string name = "a1">\n Each activity uses a different timer, however when you change from the scoring screen to
         the video or glossary screen, the time gets carried over to a new timer that is created.
         So as a result the same time will be held in every activity. \n \n</string>
