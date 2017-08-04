@@ -17,14 +17,13 @@
         newly accessed activity, which can sometimes result in a second delay when changing activities.
         This will be resolved during the next change in activities. \n \n</string>
 
-        <string name = "q4">Why can I only stop the timer in the video activity, but not resume it? \n</string>
+        <string name = "q4">How does the penalty card system work? \n</string>
 
-        <string name = "a4">\n This was a design decision  that was intended to help control the
-        intended flow of the app. After recording a touch, it was intended that the user would pause
-        the timer and navigate to the scoring activity to allocate points, and then restart the timer
-        and move back to video mode. In the future this might be changed so that the timer can be
-        resumed from the video mode in order to reduce the delay between starting the timer and
-        launching the camera. \n \n</string>
+        <string name = "a4">\n When the app is initially launched, there will be two red boxes with
+            x0 next to them. The number next to the red box indicates the number of red cards that
+            the fencer has received. This number will increase when more cards are added. When a yellow
+            card is given, a yellow box will appear, indicating that this fencer has been given a yellow
+            card. As per the rules of fencing, further yellow cards are treated as red cards. \n \n</string>
 
         <string name = "q5">Are you affiliated with a particular club or group? \n</string>
 

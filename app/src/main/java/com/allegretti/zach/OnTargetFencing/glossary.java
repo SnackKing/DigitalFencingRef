@@ -126,8 +126,8 @@ public class glossary extends AppCompatActivity {
                                         int groupPosition, int childPosition, long id) {
                 final String selected = (String) expListAdapter.getChild(
                         groupPosition, childPosition);
-                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
+//                        .show();
 
                 return true;
             }

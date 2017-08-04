@@ -25,6 +25,7 @@
             <item>Point-in-Line</item>
             <item>Prêt</item>
             <item>Riposte</item>
+            <item>Red Card</item>
             <item>Salute</item>
             <item>Simultaneous</item>
             <item>Target Area</item>
@@ -55,11 +56,18 @@
         <item>An attack that passes the target without hitting.</item>
         <item>An established threat made with the extended arm. A point-in-line is a static threat, created by one fencer by extending the weapon and arm prior to any actions in a phrase. In foil and sabre, a Point-in-line has right of way, therefore, if the line is not withdrawn, any attack launched by the opponent does not have right of way</item>
         <item>French term for "ready." Used by the judge after the command \'en garde\' and before the command \'allez.\'</item>
-        <item>An offensive action made immediately after a parry of the opponent\'s attack.</item>
+        <item>An offensive action made immediately after a parry of the opponent\'s attack. A riposte made after a successful parry will have right of way. </item>
+        <item>Given to a fencer who commits a more serious violation. After a red card is given for any reason, all further yellow cards are given as red cards instead. When a fencer is given a red card, his/her opponent will receive a free touch. If several red cards are earned, a black card may be given in some cases.</item>
         <item>With the weapon, a customary acknowledgement of one\'s opponent and referee at the start and end of the bout.</item>
         <item>In foil and sabre, two attacks for which the right-of-way is too close to determine.</item>
         <item>The area delimited for valid hits in that weapon. Foil target area consists of the entire torso, including the groin and the bottom of the mask which covers the lame, and down to the waist in back. Head, arms and legs are considered off-target in foil. Épée uses the entire body for target. Sabre uses all the body area above the waist, except the hands and the back of the head.</item>
-        <item> Used to indicate a minor rule infraction by one of the fencers.</item>
+        <item> Given to fencers who commit a minor penalty. Acts as a warning. If another minor infraction is committed, then a red card is given. If a fencer earns a red card for a more serious act before the first yellow card is given, any action that would give a yellow card would instead result in a red card.</item>
+    </string-array>
+
+    <string-array name="cards">
+        <item> Give Yellow Card</item>
+        <item> Give Red Card</item>
+        <item> Remove All Cards</item>
     </string-array>
 
 

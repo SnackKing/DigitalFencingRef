@@ -1,7 +1,10 @@
 package com.allegretti.zach.OnTargetFencing;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -13,10 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
 
+
+import org.w3c.dom.Text;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +32,24 @@ public  class HomeScreen extends AppCompatActivity {
       Contains the current time on the CountDownTimer
      */
     private TextView time;
+
+    /*
+       Whether or not the left fencer has gotten a yellow
+     */
+    private boolean leftYellowCard;
+    /*
+       Whether or not the right fencer has gotten a yellow
+     */
+    private boolean rightYellowCard;
+    /*
+       Number of red cards the left fencer has received
+     */
+    private int leftRedCards;
+    /*
+       Number of red cards the right fencer has received
+     */
+    private int rightRedCards;
+
     /*
         Cancels the current CountDownTimer
      */
@@ -50,6 +74,8 @@ public  class HomeScreen extends AppCompatActivity {
     /*
         Used to stop the timer from a different activity.
      */
+
+
     SharedPreferences sharedPreferences;
 
     private static boolean hasBooted;
@@ -66,6 +92,10 @@ BottomNavigationView bottomNav;
         AppRater.app_launched(this);
         bundleUsed = false;
         isCountingDown = false;
+        leftYellowCard=false;
+        rightYellowCard=false;
+        leftRedCards=0;
+        rightRedCards=0;
         sharedPreferences = this.getSharedPreferences("count", 0);
         //Initialize all components
         ImageButton redPlus = (ImageButton) findViewById(R.id.redPlus);
@@ -80,8 +110,20 @@ BottomNavigationView bottomNav;
         Button removeMinute = (Button) findViewById(R.id.removeMinute);
         Button resetScore = (Button) findViewById(R.id.resetScore);
 
+        final TextView leftRedCount = (TextView) findViewById(R.id.leftRedCount);
+        final TextView rightRedCount = (TextView) findViewById(R.id.rightRedCount);
+        Button leftCard = (Button)findViewById(R.id.leftCard);
+        Button rightCard = (Button) findViewById(R.id.rightCard);
+        final ImageView leftYellow = (ImageView) findViewById(R.id.leftYellow);
+        final ImageView rightYellow = (ImageView) findViewById(R.id.rightYellow);
+
+
+        leftYellow.setVisibility(View.INVISIBLE);
+        rightYellow.setVisibility(View.INVISIBLE);
+
         final TextView redScore = (TextView) findViewById(R.id.redScore);
         final TextView greenScore = (TextView) findViewById(R.id.greenScore);
+
          time = (TextView) findViewById(R.id.time);
         currentTime = time.getText().toString();
 
@@ -280,6 +322,124 @@ BottomNavigationView bottomNav;
             public void onClick(View v) {
                 redScore.setText("0");
                 greenScore.setText("0");
+            }
+        });
+        leftCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(v.getContext(), android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(v.getContext());
+                }
+                builder.setTitle("Card Left Fencer")
+                        .setItems(R.array.cards, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Adding yellow
+                                if(which == 0){
+                                    //First card given is yellow
+                                    if(!leftYellowCard){
+                                        leftYellowCard = true;
+                                        leftYellow.setVisibility(View.VISIBLE);
+                                    }
+                                    //Adding red because a red was already given
+                                    else if(leftRedCards > 0){
+                                        leftRedCards++;
+                                        leftRedCount.setText("x " + String.valueOf(leftRedCards));
+                                        int newRightScore = Integer.parseInt(greenScore.getText().toString());
+                                        newRightScore++;
+                                        greenScore.setText(String.valueOf(newRightScore));
+                                    }
+                                    //Adding red because a yellow was already given
+                                    else{
+                                        leftRedCards++;
+                                        leftRedCount.setText("x " + String.valueOf(leftRedCards));
+                                        int newRightScore = Integer.parseInt(greenScore.getText().toString());
+                                        newRightScore++;
+                                        greenScore.setText(String.valueOf(newRightScore));
+                                    }
+                                }
+                                //Adding red
+                                else if(which == 1){
+                                    leftRedCards++;
+                                    leftRedCount.setText("x " + String.valueOf(leftRedCards));
+                                    int newRightScore = Integer.parseInt(greenScore.getText().toString());
+                                    newRightScore++;
+                                    greenScore.setText(String.valueOf(newRightScore));
+                                }
+                                //clear all cards for this fencer
+                                else if(which == 2){
+                                    leftRedCards = 0;
+                                    leftRedCount.setText("x " + String.valueOf(leftRedCards));
+                                    leftYellow.setVisibility(View.INVISIBLE);
+                                    leftYellowCard = false;
+
+
+                                }
+                            }
+                        }).show();
+
+
+            }
+        });
+        rightCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(v.getContext(), android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(v.getContext());
+                }
+                builder.setTitle("Card Right Fencer")
+                        .setItems(R.array.cards, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Adding yellow
+                                if(which == 0){
+                                    //First card given is yellow
+                                    if(!rightYellowCard){
+                                        rightYellowCard = true;
+                                        rightYellow.setVisibility(View.VISIBLE);
+                                    }
+                                    //Adding red because a red was already given
+                                    else if(rightRedCards > 0){
+                                        rightRedCards++;
+                                        rightRedCount.setText("x " + String.valueOf(rightRedCards));
+                                        int newLeftScore = Integer.parseInt(redScore.getText().toString());
+                                        newLeftScore++;
+                                        redScore.setText(String.valueOf(newLeftScore));
+                                    }
+                                    //Adding red because a yellow was already given
+                                    else{
+                                        rightRedCards++;
+                                        rightRedCount.setText("x " + String.valueOf(rightRedCards));
+                                        int newLeftScore = Integer.parseInt(redScore.getText().toString());
+                                        newLeftScore++;
+                                        redScore.setText(String.valueOf(newLeftScore));
+                                    }
+                                }
+                                //Adding red
+                                else if(which == 1){
+                                    rightRedCards++;
+                                    rightRedCount.setText("x " + String.valueOf(rightRedCards));
+                                    int newLeftScore = Integer.parseInt(redScore.getText().toString());
+                                    newLeftScore++;
+                                    redScore.setText(String.valueOf(newLeftScore));
+                                }
+                                //clear all cards for this fencer
+                                else if(which == 2){
+                                    rightRedCards = 0;
+                                    rightRedCount.setText("x " + String.valueOf(rightRedCards));
+                                    rightYellow.setVisibility(View.INVISIBLE);
+                                    rightYellowCard = false;
+
+                                }
+                            }
+                        }).show();
+
             }
         });
     }
