@@ -56,21 +56,22 @@
             android:padding="20dp"
             android:layout_alignTop="@+id/redScore"
             android:layout_alignStart="@+id/leftYellow" />
+
         <TextView
             android:id="@+id/redScore"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/redMinus"
             android:layout_toRightOf="@id/redPlus"
             android:clickable="false"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:focusableInTouchMode="false"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="0"
-            android:textSize="24sp"
-            android:layout_centerVertical="true" />
+            android:textSize="30sp" />
         <ImageButton
             android:id="@+id/redMinus"
             android:layout_width="wrap_content"
@@ -94,21 +95,23 @@
             android:padding="20dp"
             android:layout_centerVertical="true"
             android:layout_alignEnd="@+id/resetScore" />
+
         <TextView
             android:id="@+id/greenScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
-            android:clickable="false"
-            android:layout_toLeftOf="@id/greenMinus"
-            android:layout_toRightOf="@id/greenPlus"
-            android:text="0"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:layout_alignBaseline="@+id/redScore"
-            android:layout_alignBottom="@+id/redScore" />
+            android:layout_alignBottom="@+id/redScore"
+            android:layout_toLeftOf="@id/greenMinus"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/greenPlus"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:text="0"
+            android:textSize="30sp" />
 
         <ImageButton
             android:id="@+id/greenMinus"
@@ -117,11 +120,11 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_minus"
             android:padding="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="50dp"
 
             android:layout_alignTop="@+id/redMinus"
-            android:layout_alignStart="@+id/rightYellow" />
+            android:layout_alignStart="@+id/rightRed" />
 
 
         <Button
@@ -133,7 +136,7 @@
             android:text="Start"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:padding="10dp"
+            android:padding="20dp"
 
             android:layout_above="@+id/redRectangle"
             android:layout_marginBottom="82dp"
@@ -147,7 +150,7 @@
             android:layout_alignBottom="@+id/start"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
-            android:padding="10dp"
+            android:padding="20dp"
 
             android:layout_marginRight="20dp"
             android:background="@color/colorPrimary"
@@ -164,7 +167,7 @@
             android:background="@color/colorPrimary"
             android:text="Reset"
             android:textColor="@android:color/white"
-            android:padding="10dp"
+            android:padding="20dp"
 
             android:textSize="24sp"
             android:layout_alignBaseline="@+id/stop"
@@ -184,7 +187,7 @@
             android:inputType="number|time"
             android:text="3:00"
             android:textColor="@android:color/white"
-            android:textSize="42sp"
+            android:textSize="50sp"
             tools:ignore="TextViewEdits" />
 
 
@@ -226,7 +229,10 @@
 
             android:text="Clear Score"
             android:textSize="24sp"
-            android:padding="10dp"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:textColor="@android:color/white"
             android:layout_alignBaseline="@+id/leftCard"
             android:layout_alignBottom="@+id/leftCard"
@@ -275,8 +281,10 @@
             android:textColor="@android:color/white"
             android:background="@color/colorPrimary"
             android:layout_marginTop="39dp"
-            android:padding="10dp"
-
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textSize="24sp"
             android:layout_below="@+id/leftYellow"
             android:layout_alignStart="@+id/start" />
@@ -286,10 +294,12 @@
             android:layout_height="wrap_content"
             android:text="Give Card"
             android:textColor="@android:color/white"
-            android:padding="10dp"
-
-            android:background="@color/colorPrimary"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:textSize="24sp"
+            android:background="@color/colorPrimary"
             android:layout_alignBaseline="@+id/resetScore"
             android:layout_alignBottom="@+id/resetScore"
             android:layout_alignEnd="@+id/reset" />
